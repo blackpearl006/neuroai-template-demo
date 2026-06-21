@@ -1,0 +1,22 @@
+/* highlight.js token colours mapped to theme variables so code blocks match
+   the active light/dark/gradient theme. */
+.hljs { color: rgb(var(--c-ink)); background: transparent; }
+.hljs-comment, .hljs-quote { color: rgb(var(--c-ink2)); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-name, .hljs-tag {
+  color: rgb(var(--c-sig));
+}
+.hljs-string, .hljs-title, .hljs-section, .hljs-attribute, .hljs-literal,
+.hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-addition {
+  color: #2a9e8f;
+}
+.hljs-number, .hljs-symbol, .hljs-bullet, .hljs-link, .hljs-meta, .hljs-selector-id,
+.hljs-selector-class {
+  color: rgb(var(--c-accent));
+}
+.hljs-title.function_, .hljs-function .hljs-title {
+  color: rgb(var(--c-ink));
+  font-weight: 600;
+}
+.hljs-attr, .hljs-variable, .hljs-params { color: rgb(var(--c-ink)); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }

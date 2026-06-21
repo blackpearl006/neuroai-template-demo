@@ -1,0 +1,9 @@
+# Asset-generation pipeline dependencies.
+#   pip install -r scripts/requirements.txt
+nibabel>=5.0
+numpy>=1.24
+pandas>=2.0
+pillow>=10.0
+matplotlib>=3.7
+nilearn>=0.10
+scipy>=1.10
