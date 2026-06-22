@@ -1,10 +1,10 @@
 import config from "./config";
 import Hero          from "./sections/00-Hero";
 import Abstract      from "./sections/01-Abstract";
-import Playground    from "./sections/02-Playground";
-import Comparisons   from "./sections/03-Comparisons";
-import Methods       from "./sections/03-Methods";
+import Architecture  from "./sections/03-Architecture";
 import Preprocessing from "./sections/04-Preprocessing";
+import Explorer      from "./sections/02-Explorer";
+import Results       from "./sections/06-Results";
 import Resources     from "./sections/04-Resources";
 import Showcase      from "./sections/05-Showcase";
 import FontSizeControl    from "./components/FontSizeControl";
@@ -15,10 +15,10 @@ import TableOfContents    from "./components/TableOfContents";
 const REGISTRY = {
   hero: Hero,
   abstract: Abstract,
-  playground: Playground,
-  comparisons: Comparisons,
-  methods: Methods,
+  architecture: Architecture,
   preprocessing: Preprocessing,
+  explorer: Explorer,
+  results: Results,
   showcase: Showcase,
   resources: Resources,
 };

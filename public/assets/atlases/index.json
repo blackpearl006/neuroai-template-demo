@@ -1,0 +1,62 @@
+[
+  {
+    "key": "brainnetome",
+    "label": "Brainnetome (246)",
+    "count": 246,
+    "hasMesh": true
+  },
+  {
+    "key": "aal90",
+    "label": "AAL-90",
+    "count": 90,
+    "hasMesh": false
+  },
+  {
+    "key": "dosenbach160",
+    "label": "Dosenbach-160",
+    "count": 160,
+    "hasMesh": false
+  },
+  {
+    "key": "power264",
+    "label": "Power-264",
+    "count": 264,
+    "hasMesh": false
+  },
+  {
+    "key": "craddock200",
+    "label": "Craddock-200",
+    "count": 200,
+    "hasMesh": false
+  },
+  {
+    "key": "gordon333",
+    "label": "Gordon-333",
+    "count": 333,
+    "hasMesh": false
+  },
+  {
+    "key": "hcp_mmp_glasser_360",
+    "label": "Glasser-360",
+    "count": 360,
+    "hasMesh": false
+  },
+  {
+    "key": "dk.scgm82",
+    "label": "Desikan-Killiany-82",
+    "count": 82,
+    "hasMesh": false
+  },
+  {
+    "key": "destrieux",
+    "label": "Destrieux-148",
+    "count": 148,
+    "hasMesh": false
+  },
+  {
+    "key": "destrieux_scgm",
+    "label": "Destrieux+SCGM-162",
+    "count": 162,
+    "hasMesh": false
+  }
+]

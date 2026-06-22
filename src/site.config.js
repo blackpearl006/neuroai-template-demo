@@ -56,38 +56,13 @@ const config = {
   sections: [
     { id: "hero",          nav: null,            enabled: true },
     { id: "abstract",      nav: "Overview",      enabled: true },
-    { id: "playground",    nav: "Explorer",      enabled: true },
-    { id: "comparisons",   nav: "Comparisons",   enabled: true },
-    { id: "methods",       nav: "Methods",       enabled: true },
+    { id: "architecture",  nav: "Architecture",  enabled: true },
     { id: "preprocessing", nav: "Preprocessing", enabled: true },
+    { id: "explorer",      nav: "Explorer",      enabled: true },
+    { id: "results",       nav: "Results",       enabled: true },
     { id: "showcase",      nav: "Components",    enabled: true },
     { id: "resources",     nav: "Resources",     enabled: true },
   ],
-
-  // ── Fingerprint-explorer taxonomy ─────────────────────────────────────────
-  // The data dimensions of the ROI attribution study. Wired into the Playground,
-  // Comparisons, ROI table, radar and filter bar. Replace with your own cohorts/
-  // analyses; `roiCount` must match your regions.json / fingerprints arrays.
-  taxonomy: {
-    roiCount:   246,
-    atlasName:  "Brainnetome",
-    cohorts:    ["ADNI", "OASIS3", "MAYO", "CAMCAN", "SALD", "SRPBS", "BrainLat", "ABIL"],
-    analyses: [
-      { key: "main",         label: "Main" },
-      { key: "longitudinal", label: "Longitudinal" },
-      { key: "female",       label: "Female" },
-      { key: "male",         label: "Male" },
-      { key: "left_hem",     label: "Left hem." },
-      { key: "right_hem",    label: "Right hem." },
-      { key: "caucasian",    label: "Caucasian-trained" },
-    ],
-    thresholds: [
-      { key: "top_5_perc_rois",  label: "Top 5%" },
-      { key: "top_10_perc_rois", label: "Top 10%" },
-      { key: "top_15_perc_rois", label: "Top 15%" },
-      { key: "top_20_perc_rois", label: "Top 20%" },
-    ],
-  },
 
   // ── Editable section content ──────────────────────────────────────────────
   content: {
@@ -97,8 +72,8 @@ const config = {
       cover:   "demo/brain-06.jpg",
       cohorts: ["Brain viewers", "Carousel", "Gallery", "Compare slider", "Math", "Code", "Tables"],
       badge:   "Edit one file",
-      primaryCta:   { label: "See the components →", href: "#showcase" },
-      secondaryCta: { label: "Get the template",     href: "#resources" },
+      primaryCta:   { label: "Explore brain regions →", href: "#explorer" },
+      secondaryCta: { label: "Get the template",        href: "#resources" },
     },
 
     abstract: {
@@ -115,6 +90,60 @@ const config = {
         { heading: "Config-driven",  body: "Title, authors, sections, theme, fonts and every block of copy live in src/site.config.js. A non-coder can adapt the whole site without touching component code — turn sections on or off and reorder them in one array." },
         { heading: "Batteries included", body: "Interactive brain/volume viewers, an auto-advancing carousel, an image gallery with lightbox, before/after comparison sliders, LaTeX math, copy-button code blocks, responsive tables and callouts — all demonstrated in the Components section below." },
       ],
+    },
+
+    architecture: {
+      eyebrow: "Model",
+      title:   "A compact 3D-CNN for brain age",
+      lede:    "An SFCN-style network reads a whole-brain T1 MRI and regresses a single predicted age. Edit the diagram blocks in site.config.js → content.architecture.diagram.",
+      // Optional: override the diagram. Defaults to a 6-block SFCN.
+      // diagram: { input: "T1 MRI · 182³", output: "Brain age (yrs)", stages: [{ ch: 32, fmap: "91³" }, ...] },
+    },
+
+    preprocessing: {
+      eyebrow: "Data",
+      title:   "Preprocessing",
+      lede:    "A light, standard pipeline turns each raw T1 scan into a clean, aligned volume the model can read.",
+      steps:   ["Bias correction", "Brain extraction", "Linear registration", "WM normalisation"],
+    },
+
+    explorer: {
+      eyebrow:      "Explore",
+      title:        "Important brain regions",
+      lede:         "Which regions drive the prediction? Pick a brain atlas and a view — interactive 3D, 2D projections, or a sortable table. The Brainnetome atlas is shown as a parcellated mesh; every other atlas renders as coordinate nodes. (~20% of regions are flagged important — illustrative placeholder data.)",
+      defaultAtlas: "brainnetome",
+      defaultView:  "split",
+    },
+
+    results: {
+      eyebrow: "Results",
+      title:   "Results & Discussion",
+      lede:    "The headline numbers, then what they mean. Swap in your own metrics, table and findings.",
+      metrics: [
+        { stat: "3.1 yr", label: "Mean abs. error", detail: "held-out test set" },
+        { stat: "0.95",   label: "Pearson r",       detail: "predicted vs. true age" },
+        { stat: "12k",    label: "Scans",           detail: "training + validation" },
+        { stat: "20%",    label: "Regions driving", detail: "of the full atlas" },
+      ],
+      table: {
+        caption: "Performance by cohort (illustrative).",
+        columns: [
+          { key: "cohort", label: "Cohort" },
+          { key: "n",      label: "N",         align: "right" },
+          { key: "mae",    label: "MAE (yr)",  align: "right" },
+          { key: "r",      label: "r",         align: "right" },
+        ],
+        rows: [
+          { cohort: "Site A", n: "4,210", mae: "2.9", r: "0.96" },
+          { cohort: "Site B", n: "3,884", mae: "3.2", r: "0.95" },
+          { cohort: "Site C", n: "3,950", mae: "3.4", r: "0.94" },
+        ],
+      },
+      findings: [
+        { heading: "Where the signal lives", body: "The most important regions concentrate in association cortex and key subcortical structures — consistent across atlases, which suggests the result is not an artefact of one particular parcellation." },
+        { heading: "What it means",          body: "A compact convolutional model recovers a robust brain-age signal from raw structural MRI, and the regions it relies on are anatomically plausible. Replace this prose with your own discussion." },
+      ],
+      discussion: "These numbers are placeholders. Edit site.config.js → content.results to drop in your real metrics, per-cohort table and takeaways.",
     },
 
     resources: {
