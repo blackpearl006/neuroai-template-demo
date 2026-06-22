@@ -1,5 +1,8 @@
 import config from "../config";
 
+// Prefix a project-relative asset path with the deploy base; pass http(s) through.
+const asset = (p) => (!p || /^https?:/.test(p) ? p : `${import.meta.env.BASE_URL}${p}`);
+
 // Splits the title so the configured accent word renders in the signal colour.
 function renderTitle(title, accent) {
   if (!accent || !title.includes(accent)) return title;
@@ -57,6 +60,14 @@ export default function Hero() {
             </span>
           )}
         </div>
+      )}
+
+      {/* Optional project cover image. Omit `hero.cover` in site.config.js for
+          Clarity's "no-cover" title layout (the default). */}
+      {hero.cover && (
+        <figure className="mt-12 rounded-2xl overflow-hidden border border-rule/20">
+          <img src={asset(hero.cover)} alt={identity.title} className="w-full object-cover max-h-[460px]" />
+        </figure>
       )}
     </header>
   );

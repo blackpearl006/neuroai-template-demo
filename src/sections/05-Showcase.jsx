@@ -5,9 +5,15 @@ import DataTable from "../components/DataTable";
 import CompareSlider from "../components/CompareSlider";
 import BrainGrid from "../components/BrainGrid";
 import BrainRenderer from "../components/BrainRenderer";
+import Carousel from "../components/Carousel";
+import Gallery from "../components/Gallery";
+import Callout from "../components/Callout";
 
 const B = import.meta.env.BASE_URL;
 const A = (p) => `${B}${p}`;
+
+// Demo imagery (Unsplash, search "brain" — see public/demo/CREDITS.md).
+const BRAIN = Array.from({ length: 8 }, (_, i) => A(`demo/brain-0${i + 1}.jpg`));
 
 const CODE = `import torch
 from model import BrainAgeNet
@@ -39,8 +45,29 @@ export default function Showcase() {
       id="showcase"
       eyebrow="Toolbox"
       title="Component showcase"
-      lede="Every building block the template ships with. Drop these into your own sections — text, math, code, tables, comparison sliders, brain grids and interactive 3D/volume viewers."
+      lede="Every building block the template ships with. Drop these into your own sections — carousels, galleries, math, code, tables, comparison sliders, callouts, brain grids and interactive 3D/volume viewers."
     >
+      <Block title="Carousel / slideshow (auto-advancing · hover to pause)">
+        <Carousel
+          items={BRAIN.slice(0, 5).map((src, i) => ({ src, caption: `Slide ${i + 1} — swap for your own figures.` }))}
+          height={420}
+        />
+      </Block>
+
+      <Block title="Image gallery (responsive grid · click to enlarge)">
+        <Gallery
+          cols={4}
+          items={BRAIN.map((src, i) => ({ src, caption: `Figure ${i + 1}` }))}
+          caption="A responsive image grid with a built-in lightbox — like Clarity's columns-2 / columns-6."
+        />
+      </Block>
+
+      <Block title="Callouts (note · tip · warning)">
+        <Callout kind="note" title="Note">Use callouts to flag context, assumptions or caveats inline with your prose.</Callout>
+        <Callout kind="tip" title="Tip">Everything on this page is driven by <code>src/site.config.js</code> — edit one file.</Callout>
+        <Callout kind="warning" title="Heads up">Replace the placeholder Unsplash imagery with your own figures before publishing.</Callout>
+      </Block>
+
       <Block title="Math (LaTeX via KaTeX)">
         <Math tex={"\\mathrm{MAE} = \\frac{1}{N}\\sum_{i=1}^{N} \\left| \\hat{y}_i - y_i \\right|"} />
         <p className="font-serif text-ink2">

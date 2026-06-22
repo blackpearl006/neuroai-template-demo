@@ -9,6 +9,7 @@ import Resources     from "./sections/04-Resources";
 import Showcase      from "./sections/05-Showcase";
 import FontSizeControl    from "./components/FontSizeControl";
 import AppearanceControls from "./components/AppearanceControls";
+import TableOfContents    from "./components/TableOfContents";
 
 // id (from site.config.sections) → section component.
 const REGISTRY = {
@@ -32,6 +33,7 @@ export default function App() {
     <main>
       <FontSizeControl />
       {config.showThemeToggle && <AppearanceControls />}
+      <TableOfContents />
 
       {sections.map((s, i) => {
         const Cmp = REGISTRY[s.id];

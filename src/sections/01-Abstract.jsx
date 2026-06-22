@@ -5,7 +5,7 @@ export default function Abstract() {
   const a = config.content.abstract;
 
   return (
-    <Section eyebrow={a.eyebrow} title={a.title} lede={a.lede}>
+    <Section id="abstract" eyebrow={a.eyebrow} title={a.title} lede={a.lede}>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
         {a.stats.map((s) => (
           <div key={s.label} className="bg-paper2 rounded-xl p-6 border border-rule/20">

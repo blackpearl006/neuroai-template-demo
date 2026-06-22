@@ -19,6 +19,7 @@ export default function Preprocessing() {
 
   return (
     <Section
+      id="preprocessing"
       eyebrow="Preprocessing"
       title="From raw scan to model input"
       lede="An 11-step FSL + ANTs pipeline turns each subject's raw T1-weighted MRI into a spatially-aligned, white-matter-normalised volume — the exact input the SFCN ensemble sees."

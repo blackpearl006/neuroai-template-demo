@@ -19,23 +19,23 @@
 const config = {
   // ── Identity ────────────────────────────────────────────────────────────
   identity: {
-    title:       "Explainable Brain-Age Fingerprints",
-    titleAccent: "Fingerprints",          // word in the title rendered in the accent colour
-    tagline:     "Uncovering universal and population-specific patterns of brain ageing across 3,569 individuals and 8 cohorts — made interpretable with Integrated Gradients.",
-    eyebrow:     "Brain Age · Integrated Gradients · Brainnetome Atlas",
-    authors:     "Ninad Aithal et al.",
-    institution: "Indian Institute of Science, Bangalore",
+    title:       "NeuroAI Paper Template",
+    titleAccent: "Template",              // word in the title rendered in the accent colour
+    tagline:     "A fast, config-driven website template for AI & neuroscience papers. Interactive brain viewers, carousels, galleries, comparison sliders, math and code — all editable from a single file.",
+    eyebrow:     "Open-source · Vite + React · GitHub Pages",
+    authors:     "Your Name et al.",
+    institution: "Your Institution",
     year:        2026,
-    repoUrl:     "https://github.com/neuroai-template/neuroai-template.github.io",
+    repoUrl:     "https://github.com/blackpearl006/neuroai-template-demo",
   },
 
   // ── Browser tab + social share (Open Graph / Twitter) ────────────────────
   meta: {
-    title:       "Brain-Age Fingerprints — Explainable Brain-Age Biomarkers",
-    description: "Interactive explorer for brain-age fingerprints across 8 cohorts using Integrated Gradients on deep brain-age models.",
+    title:       "NeuroAI Paper Template — interactive research website",
+    description: "A clean, config-driven template for AI / neuroscience paper websites: brain viewers, carousels, galleries, comparison sliders, math, code and more.",
     ogImage:     "og-image.png",          // lives in /public
     twitter:     "@your_handle",
-    url:         "https://neuroai-template.github.io/",
+    url:         "https://blackpearl006.github.io/neuroai-template-demo/",
     lang:        "en",
   },
 
@@ -60,6 +60,7 @@ const config = {
     { id: "comparisons",   nav: "Comparisons",   enabled: true },
     { id: "methods",       nav: "Methods",       enabled: true },
     { id: "preprocessing", nav: "Preprocessing", enabled: true },
+    { id: "showcase",      nav: "Components",    enabled: true },
     { id: "resources",     nav: "Resources",     enabled: true },
   ],
 
@@ -91,44 +92,46 @@ const config = {
   // ── Editable section content ──────────────────────────────────────────────
   content: {
     hero: {
-      cohorts: ["ADNI", "OASIS3", "MAYO", "CAMCAN", "SALD", "SRPBS", "BrainLat", "ABIL"],
-      badge:   "8 cohorts · 4 continents",
-      primaryCta:   { label: "Explore Fingerprints →", href: "#playground" },
-      secondaryCta: { label: "Paper & Code",            href: "#resources" },
+      // Set `cover` to a project banner image for Clarity's "cover" title layout;
+      // delete it for the "no-cover" layout. Path is relative to /public.
+      cover:   "demo/brain-06.jpg",
+      cohorts: ["Brain viewers", "Carousel", "Gallery", "Compare slider", "Math", "Code", "Tables"],
+      badge:   "Edit one file",
+      primaryCta:   { label: "See the components →", href: "#showcase" },
+      secondaryCta: { label: "Get the template",     href: "#resources" },
     },
 
     abstract: {
-      eyebrow: "Study",
-      title:   "What we found",
-      lede:    "Twenty-six Universal ROIs emerge as consistent brain-age predictors across all 8 cohorts. Population-specific patterns reveal distinct ageing signatures, with marked differences in East Asian and Latin American brains when trained on Caucasian-only data.",
+      eyebrow: "About",
+      title:   "What this template gives you",
+      lede:    "A polished, single-page paper site you adapt by editing one config file. The sections below are a live demo — keep what you need, switch off the rest. The data shown is illustrative placeholder content.",
       stats: [
-        { stat: "3,569", label: "participants",   detail: "8 cohorts · 4 continents" },
-        { stat: "246",   label: "brain ROIs",     detail: "Brainnetome atlas, whole-brain" },
-        { stat: "26",    label: "Universal ROIs",  detail: "significant in all 8 cohorts" },
-        { stat: "100",   label: "brain-age models", detail: "5 folds × 20 repeats ensemble" },
+        { stat: "1",   label: "file to edit",  detail: "site.config.js drives the whole site" },
+        { stat: "12+", label: "components",    detail: "viewers, carousel, gallery, math, code…" },
+        { stat: "3",   label: "themes",        detail: "light · dark · gradient, switchable live" },
+        { stat: "0",   label: "build config",  detail: "push to main → GitHub Pages deploys" },
       ],
       columns: [
-        { heading: "Cross-sectional fingerprints", body: "Using Integrated Gradients on an ensemble of 100 models, we identify which Brainnetome ROIs most strongly influence brain-age predictions per subject, then aggregate across subjects within each cohort to produce cohort-specific fingerprints." },
-        { heading: "Population generalisation",     body: "Models trained exclusively on Caucasian cohorts show substantial MAE degradation on East Asian (SRPBS) and Latin American (BrainLat) test sets, while models trained on diverse data achieve consistent performance — highlighting the importance of multi-population training." },
+        { heading: "Config-driven",  body: "Title, authors, sections, theme, fonts and every block of copy live in src/site.config.js. A non-coder can adapt the whole site without touching component code — turn sections on or off and reorder them in one array." },
+        { heading: "Batteries included", body: "Interactive brain/volume viewers, an auto-advancing carousel, an image gallery with lightbox, before/after comparison sliders, LaTeX math, copy-button code blocks, responsive tables and callouts — all demonstrated in the Components section below." },
       ],
     },
 
     resources: {
       eyebrow: "Resources",
-      title:   "Data & Code",
-      lede:    "All model weights, data, and analysis code will be released on acceptance. Pre-release access available on request.",
+      title:   "Get the template",
+      lede:    "Fork it, edit src/site.config.js, drop your figures in /public, and push to main — GitHub Pages does the rest. Replace these links with your own paper, code and data.",
       links: [
-        { label: "Preprint",       href: "#", desc: "arXiv (coming soon)",            icon: "📄" },
-        { label: "GitHub",         href: "#", desc: "Training code + IG pipeline",     icon: "⌥" },
-        { label: "Model Weights",  href: "#", desc: "Zenodo — 100 model checkpoints",  icon: "⬇" },
-        { label: "Processed Data", href: "#", desc: "ROI attribution CSVs (Zenodo)",   icon: "📊" },
+        { label: "GitHub",        href: "https://github.com/blackpearl006/neuroai-template-demo", desc: "Fork the template",          icon: "⌥" },
+        { label: "Preprint",      href: "#", desc: "Link your arXiv / bioRxiv",   icon: "📄" },
+        { label: "Code",          href: "#", desc: "Link your project repo",      icon: "⬇" },
+        { label: "Data",          href: "#", desc: "Link your dataset / Zenodo",  icon: "📊" },
       ],
-      citation: `@article{aithal2026brainage,
-  title   = {Explainable Brain-Age Fingerprints across
-             Diverse Populations},
-  author  = {Aithal, Ninad and others},
-  journal = {TBD},
-  year    = {2026}
+      citation: `@misc{yourname2026yourpaper,
+  title   = {Your Paper Title Here},
+  author  = {Your Name and Co-Authors},
+  year    = {2026},
+  note    = {Built with the NeuroAI paper template}
 }`,
     },
   },

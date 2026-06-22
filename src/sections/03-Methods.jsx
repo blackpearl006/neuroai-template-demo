@@ -27,6 +27,7 @@ const STEPS = [
 export default function Methods() {
   return (
     <Section
+      id="methods"
       eyebrow="Methods"
       title="Forward propagation"
       lede="How each preprocessed T1-MRI volume flows through the SFCN ensemble — from raw voxels to a single brain-age estimate, layer by layer."
