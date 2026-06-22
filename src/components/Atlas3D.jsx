@@ -5,8 +5,9 @@ import * as THREE from "three";
 import { sequentialColor, palette } from "../lib/theme";
 import { fitMniToMesh, loadAtlas } from "../lib/atlas";
 
-const MESH_URL = `${import.meta.env.BASE_URL}assets/meshes/atlas.glb`;
-useGLTF.preload(MESH_URL);
+const MESH_BASE = `${import.meta.env.BASE_URL}assets/meshes/`;
+const SHELL_URL = `${MESH_BASE}atlas.glb`; // Brainnetome mesh doubles as the node-atlas shell
+useGLTF.preload(SHELL_URL);
 const BG = "#141E2D";
 
 // Categorical lobe palette — every atlas CSV carries a `lobe`, so this is the
@@ -46,8 +47,8 @@ function collectCentroids(scene) {
 }
 
 // ── Parcellated mesh scene (Brainnetome) ──────────────────────────────────────
-function MeshScene({ regions, colorMode, shellOpacity, onHover }) {
-  const { scene } = useGLTF(MESH_URL);
+function MeshScene({ regions, colorMode, shellOpacity, onHover, meshUrl }) {
+  const { scene } = useGLTF(meshUrl);
   const groupRef = useRef(null);
   const matsRef = useRef({});
   const byId = useMemo(() => new Map(regions.map((r) => [r.id, r])), [regions]);
@@ -94,7 +95,7 @@ function MeshScene({ regions, colorMode, shellOpacity, onHover }) {
 
 // ── Coordinate-node scene (all other atlases) ─────────────────────────────────
 function NodeScene({ regions, colorMode, shellOpacity, onHover }) {
-  const { scene } = useGLTF(MESH_URL);
+  const { scene } = useGLTF(SHELL_URL);
   const [ref, setRef] = useState(null);
   useEffect(() => { loadAtlas("brainnetome").then((a) => setRef(a)); }, []);
 
@@ -173,7 +174,8 @@ export default function Atlas3D({ atlas, height = 520 }) {
   }, []);
 
   const sigCount = atlas.regions.filter((r) => r.sig).length;
-  const Scene = atlas.hasMesh ? MeshScene : NodeScene;
+  const isMesh = (atlas.render || (atlas.hasMesh ? "mesh" : "nodes")) === "mesh";
+  const meshUrl = `${MESH_BASE}${atlas.mesh || "atlas.glb"}`;
 
   return (
     <div ref={boxRef} className="relative w-full rounded-xl overflow-hidden select-none" style={{ background: BG, height: isFull ? "100vh" : height }}>
@@ -182,7 +184,11 @@ export default function Atlas3D({ atlas, height = 520 }) {
         <directionalLight position={[300, 400, 200]} intensity={1.0} />
         <hemisphereLight skyColor="#3A5A7A" groundColor="#1A2A3A" intensity={0.6} />
         <Suspense fallback={null}>
-          <Scene regions={atlas.regions} colorMode={colorMode} shellOpacity={shellOpacity} onHover={onHover} />
+          {isMesh ? (
+            <MeshScene key={atlas.key} regions={atlas.regions} meshUrl={meshUrl} colorMode={colorMode} shellOpacity={shellOpacity} onHover={onHover} />
+          ) : (
+            <NodeScene key={atlas.key} regions={atlas.regions} colorMode={colorMode} shellOpacity={shellOpacity} onHover={onHover} />
+          )}
           <OrientationLabels />
         </Suspense>
         <OrbitControls enablePan={false} minDistance={130} maxDistance={560} autoRotate={autoRotate} autoRotateSpeed={1.2} />

@@ -46,9 +46,24 @@ The available section `id`s map to components in `src/App.jsx` (`REGISTRY`):
 
   Each region gets a placeholder `score` (0–1) and the top ~20% are flagged
   `sig:1`. Replace `score`/`sig` with your real importance values (edit the JSON
-  or the script). **Brainnetome** also uses the parcellated mesh
-  `public/assets/meshes/atlas.glb`; every other atlas renders as coordinate
-  nodes, so a CSV is all you need.
+  or the script).
+
+- **Parcellated atlases** (surface mesh + NiiVue label volume) are generated from
+  NIfTI label maps by a Python pipeline:
+
+  ```bash
+  pip install nibabel nilearn scikit-image trimesh fast_simplification certifi
+  python3 scripts/build-parcellation-meshes.py            # all configured atlases
+  python3 scripts/build-parcellation-meshes.py --only schaefer400
+  ```
+
+  To add an atlas, append a fetcher to the `ATLASES` dict in that script (nilearn
+  `fetch_atlas_*` or a neuroparc NIfTI) and re-run. It writes
+  `public/assets/meshes/<key>.glb` (parcels named `roi_<id>`),
+  `public/assets/atlases/<key>.nii.gz` and `<key>.json`, and updates `index.json`
+  (`render:"mesh"`, `mesh`, `volume`). Atlases without a mesh render as coordinate
+  nodes (`render:"nodes"`). In the viewer, parcellated atlases offer a **Mesh ▸
+  Volume** toggle to compare the surface mesh against the NiiVue volume render.
 
 ## 3. Preview & deploy
 
