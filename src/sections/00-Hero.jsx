@@ -22,15 +22,18 @@ export default function Hero() {
 
   return (
     <header className="max-w-wide mx-auto px-6 pt-20 pb-14">
-      <p className="font-mono text-xs text-ink2 uppercase tracking-widest mb-4">
-        {identity.eyebrow}
-      </p>
+      {hero.eyebrow && (
+        <p className="font-mono text-xs text-ink2 uppercase tracking-widest mb-4">
+          {hero.eyebrow}
+        </p>
+      )}
       <h1 className="font-sans text-5xl md:text-6xl font-bold text-ink leading-[1.1] max-w-[22ch]">
         {renderTitle(identity.title, identity.titleAccent)}
       </h1>
-      <p className="mt-6 font-serif text-xl text-ink2 max-w-[58ch] leading-relaxed">
-        {identity.tagline}
-      </p>
+      <p
+        className="mt-6 font-serif text-xl text-ink2 max-w-[58ch] leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: hero.taglineHtml }}
+      />
       <div className="flex flex-wrap gap-3 mt-8">
         <a
           href={hero.primaryCta.href}
@@ -46,10 +49,10 @@ export default function Hero() {
         </a>
       </div>
 
-      {/* Dataset chips */}
-      {hero.cohorts?.length > 0 && (
+      {/* Feature chips */}
+      {hero.chips?.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-10">
-          {hero.cohorts.map((c) => (
+          {hero.chips.map((c) => (
             <span key={c} className="font-mono text-[11px] px-2.5 py-1 rounded-full border border-rule/30 text-ink2 bg-paper2">
               {c}
             </span>

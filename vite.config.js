@@ -1,8 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import siteConfig from "./src/site.config.js";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { load as loadYaml } from "js-yaml";
 
-// Inject <title> + social/SEO meta from site.config.js (meta.*) into index.html
+// Read the editable settings (content/config.yml) at build for <title>/meta.
+const ymlCfg = loadYaml(readFileSync(fileURLToPath(new URL("./content/config.yml", import.meta.url)), "utf8")) || {};
+const siteConfig = { meta: { lang: "en", ...(ymlCfg.meta || {}) }, deploy: { basePath: "./" } };
+
+// Inject <title> + social/SEO meta from content/config.yml into index.html
 // at build time, so metadata stays single-sourced with the rest of the site.
 function htmlMeta(cfg) {
   const m = cfg.meta || {};

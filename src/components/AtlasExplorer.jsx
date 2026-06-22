@@ -113,7 +113,7 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
           </div>
         )}
 
-        <div className="flex-1" />
+        <div className="hidden sm:block sm:flex-1" />
 
         <div className="flex bg-paper2 rounded-lg border border-rule/20 p-0.5">
           {VIEWS.map((v) => (

@@ -1,4 +1,5 @@
 import Section from "../components/Section";
+import Markdown from "../components/Markdown";
 import config from "../config";
 
 export default function Abstract() {
@@ -16,14 +17,7 @@ export default function Abstract() {
         ))}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 mt-10 font-serif text-base text-ink2 leading-relaxed">
-        {a.columns.map((col) => (
-          <div key={col.heading}>
-            <h3 className="font-sans font-semibold text-ink text-lg mb-2">{col.heading}</h3>
-            <p>{col.body}</p>
-          </div>
-        ))}
-      </div>
+      <Markdown html={a.html} className="mt-10" />
     </Section>
   );
 }

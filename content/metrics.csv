@@ -1,0 +1,5 @@
+stat,label,detail
+3.1 yr,Mean abs. error,held-out test set
+0.95,Pearson r,predicted vs. true age
+12k,Scans,training + validation
+20%,Regions driving,of the full atlas

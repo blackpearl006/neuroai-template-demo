@@ -64,7 +64,7 @@ export default function Showcase() {
 
       <Block title="Callouts (note · tip · warning)">
         <Callout kind="note" title="Note">Use callouts to flag context, assumptions or caveats inline with your prose.</Callout>
-        <Callout kind="tip" title="Tip">Everything on this page is driven by <code>src/site.config.js</code> — edit one file.</Callout>
+        <Callout kind="tip" title="Tip">Everything on this page is driven by the Markdown &amp; CSV files in the <code>content/</code> folder — no code.</Callout>
         <Callout kind="warning" title="Heads up">Replace the placeholder Unsplash imagery with your own figures before publishing.</Callout>
       </Block>
 

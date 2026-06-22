@@ -1,0 +1,5 @@
+stat,label,detail
+3,content formats,"Markdown, CSV and YAML — no JSX"
+12+,components,"viewers, carousel, gallery, math, code…"
+3,themes,"light · dark · gradient, switchable live"
+0,build config,push to main → GitHub Pages deploys

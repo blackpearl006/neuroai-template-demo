@@ -1,15 +1,15 @@
 import Section from "../components/Section";
 import DataTable from "../components/DataTable";
-import Callout from "../components/Callout";
+import Markdown from "../components/Markdown";
 import config from "../config";
 
-// Results & Discussion — the numbers that matter. Big metric callouts, an
-// optional results table, findings prose and a discussion note. Everything is
-// driven by site.config.js → content.results, so it's trivial to edit.
+// Results & Discussion. Metric cards (content/metrics.csv), a results table
+// (content/results-table.csv) and prose (content/results.md) — all editable
+// without touching code.
 export default function Results() {
   const c = config.content.results || {};
   const metrics = c.metrics || [];
-  const findings = c.findings || [];
+  const hasTable = c.table?.rows?.length > 0;
 
   return (
     <Section
@@ -30,20 +30,9 @@ export default function Results() {
         </div>
       )}
 
-      {c.table && <DataTable columns={c.table.columns} rows={c.table.rows} caption={c.table.caption} />}
+      {hasTable && <DataTable columns={c.table.columns} rows={c.table.rows} caption={c.table.caption} />}
 
-      {findings.length > 0 && (
-        <div className="grid md:grid-cols-2 gap-6 mt-8">
-          {findings.map((f) => (
-            <div key={f.heading}>
-              <h3 className="font-sans font-semibold text-ink text-lg mb-2">{f.heading}</h3>
-              <p className="font-serif text-ink2 leading-relaxed">{f.body}</p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {c.discussion && <Callout kind="note" title="Discussion">{c.discussion}</Callout>}
+      <Markdown html={c.html} className="mt-8" />
     </Section>
   );
 }

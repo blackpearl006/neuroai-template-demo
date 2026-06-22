@@ -1,7 +1,8 @@
 # Make your own site from this template
 
 A step-by-step for reusing this template for a new paper/study (e.g. for a
-friend). No deep coding required — almost everything is one config file.
+friend). **No coding required** — you edit Markdown, CSV and one settings file,
+all inside the `content/` folder.
 
 ## 0. One-time setup
 
@@ -14,21 +15,25 @@ npm run dev                         # open http://localhost:5173
 
 The page hot-reloads as you edit. Stop with Ctrl-C.
 
-## 1. Edit one file: `src/site.config.js`
+## 1. Everything you edit is in the `content/` folder
 
-This is the single source of truth. Change:
+You never touch code. The folder has three kinds of files:
 
-- **`identity`** — title, authors, institution, tagline, `repoUrl`.
-- **`meta`** — browser-tab title + social-share text (and `url` once you know it).
-- **`theme` / `fonts`** — `"light" | "dark" | "gradient"`, plus a font preset.
-- **`sections`** — turn sections on/off and reorder them. Each entry is
-  `{ id, nav, enabled }`; `nav` is the label in the left table-of-contents.
-  Set `enabled: false` to hide a section.
-- **`content`** — the text/numbers of every section (overview, architecture,
-  preprocessing, explorer, results, resources). Edit in place.
+- **`config.yml`** — settings: title, authors, the colour theme & fonts, the
+  hero buttons, and which sections show (turn one off with `enabled: false`,
+  reorder by moving the line). It's just `name: value` — keep the indentation.
+- **`*.md` (Markdown)** — the words of each section (`hero.md`, `abstract.md`,
+  `architecture.md`, `preprocessing.md`, `explorer.md`, `results.md`,
+  `resources.md`). Write normally — headings, **bold**, *italic*, [links](#),
+  lists. The bit at the very top between the `---` lines is the section's
+  eyebrow/title.
+- **`*.csv` (open in Excel/Sheets)** — the numbers: `stats.csv` (overview
+  cards), `metrics.csv` (results cards), `results-table.csv` (the table),
+  `links.csv` (resource links). Edit a cell, save. `citation.bib` holds your
+  BibTeX.
 
-The available section `id`s map to components in `src/App.jsx` (`REGISTRY`):
-`hero, abstract, architecture, preprocessing, explorer, results, showcase, resources`.
+A typo in any of these can't break the site — at worst that one section looks
+empty until you fix it.
 
 ## 2. Swap in your figures & data
 

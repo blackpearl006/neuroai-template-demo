@@ -59,3 +59,18 @@
 .animate-fade-in {
   animation: fade-in 0.35s ease-out;
 }
+
+/* Rendered Markdown from /content/*.md — readable paper prose. */
+.prose-paper { @apply font-serif text-ink2 leading-relaxed; }
+.prose-paper > :first-child { margin-top: 0; }
+.prose-paper > :last-child { margin-bottom: 0; }
+.prose-paper p { @apply my-4; }
+.prose-paper h2 { @apply font-sans font-bold text-ink text-2xl mt-8 mb-3; }
+.prose-paper h3 { @apply font-sans font-semibold text-ink text-lg mt-6 mb-2; }
+.prose-paper h4 { @apply font-sans font-semibold text-ink text-base mt-5 mb-2; }
+.prose-paper a { @apply text-sig underline underline-offset-2 hover:text-ink; }
+.prose-paper strong { @apply text-ink font-semibold; }
+.prose-paper ul { @apply list-disc pl-6 my-4 space-y-1; }
+.prose-paper ol { @apply list-decimal pl-6 my-4 space-y-1; }
+.prose-paper blockquote { @apply border-l-2 border-sig/40 pl-4 my-4 not-italic text-ink2; }
+.prose-paper code { @apply font-mono text-[0.85em] bg-paper2 px-1.5 py-0.5 rounded; }

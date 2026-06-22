@@ -1,0 +1,53 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#  ★ SITE SETTINGS ★   —   edit this file + the .md / .csv files in this folder
+#
+#  No coding needed. Rules:
+#    • keep the 2-space indentation
+#    • put text in "quotes"
+#    • anything after a #  is just a note to you
+#  If the site won't build, you probably changed the indentation or a quote.
+# ═══════════════════════════════════════════════════════════════════════════
+
+# ── Who / what ──────────────────────────────────────────────────────────────
+title:       "NeuroAI Paper Template"
+titleAccent: "Template"          # this word in the title shows in the accent colour
+authors:     "Your Name et al."
+institution: "Your Institution"
+year:        2026
+repoUrl:     "https://github.com/blackpearl006/neuroai-template-demo"
+
+# ── Browser tab + link previews ─────────────────────────────────────────────
+meta:
+  title:       "NeuroAI Paper Template — interactive research website"
+  description: "A clean, editable template for AI / neuroscience paper websites."
+  ogImage:     "og-image.png"    # a file in the /public folder
+  twitter:     "@your_handle"
+  url:         "https://blackpearl006.github.io/neuroai-template-demo/"
+
+# ── Look & feel ─────────────────────────────────────────────────────────────
+theme:           light       # light | dark | gradient
+fonts:           editorial    # apple | editorial | modern | display
+fontScale:       md           # sm | md | lg | xl
+showThemeToggle: true         # let readers switch theme / font live
+
+# ── Hero (the top of the page) ──────────────────────────────────────────────
+hero:
+  cover: "demo/brain-06.jpg"   # a file in /public — or delete this line for no cover
+  badge: "Edit Markdown & CSV"
+  chips: ["Brain viewers", "Carousel", "Gallery", "Compare", "Math", "Code", "Tables"]
+  primaryCta:   { label: "Explore brain regions →", href: "#explorer" }
+  secondaryCta: { label: "Get the template",        href: "#resources" }
+
+# ── Sections: order + on/off ────────────────────────────────────────────────
+#  Hide one with  enabled: false .  Reorder by moving the lines.
+#  `nav` = label in the left menu (use null to hide from the menu).
+#  `id`  = which section it is — keep these as-is.
+sections:
+  - { id: hero,          nav: null,          enabled: true }
+  - { id: abstract,      nav: Overview,      enabled: true }
+  - { id: architecture,  nav: Architecture,  enabled: true }
+  - { id: preprocessing, nav: Preprocessing, enabled: true }
+  - { id: explorer,      nav: Explorer,      enabled: true }
+  - { id: results,       nav: Results,       enabled: true }
+  - { id: showcase,      nav: Components,    enabled: true }
+  - { id: resources,     nav: Resources,     enabled: true }
