@@ -65,6 +65,14 @@ The available section `id`s map to components in `src/App.jsx` (`REGISTRY`):
   nodes (`render:"nodes"`). In the viewer, parcellated atlases offer a **Mesh ▸
   Volume** toggle to compare the surface mesh against the NiiVue volume render.
 
+- The **2D view** uses pre-rendered nilearn glass-brain PNGs. Regenerate them for
+  every atlas in `index.json` (e.g. after editing `score`/`sig`) with:
+
+  ```bash
+  python3 scripts/build-parcellation-meshes.py --glass-only
+  ```
+  → `public/assets/atlases/<key>_glass.png`.
+
 ## 3. Preview & deploy
 
 ```bash

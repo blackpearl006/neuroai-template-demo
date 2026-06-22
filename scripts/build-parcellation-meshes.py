@@ -17,7 +17,11 @@ import numpy as np
 import nibabel as nib
 from skimage import measure
 import trimesh
-from nilearn import datasets
+import matplotlib
+matplotlib.use("Agg")
+from nilearn import datasets, plotting
+
+GLASS_CMAP = "hot"
 
 SSL_CTX = ssl.create_default_context(cafile=certifi.where())
 NEUROPARC = "https://raw.githubusercontent.com/neurodata/neuroparc/master/atlases/label/Human"
@@ -191,10 +195,57 @@ def merge_index(entries):
     json.dump(out, open(path, "w"), indent=2)
     print(f"\nindex.json → {len(out)} atlases ({sum(e['render']=='mesh' for e in out)} parcellated)")
 
+# ── Glass-brain PNGs (nilearn) for the 2D view ────────────────────────────────
+
+def glass_from_volume(key, display):
+    """Parcellated atlas → fill important parcels with their score, glass-brain it."""
+    data = np.asarray(nib.load(os.path.join(ATLAS_DIR, f"{key}.nii.gz")).dataobj)
+    affine = nib.load(os.path.join(ATLAS_DIR, f"{key}.nii.gz")).affine
+    regions = json.load(open(os.path.join(ATLAS_DIR, f"{key}.json")))["regions"]
+    stat = np.zeros(data.shape, dtype=np.float32)
+    for r in regions:
+        if r["sig"]:
+            stat[data == r["id"]] = r["score"]
+    img = nib.Nifti1Image(stat, affine)
+    plotting.plot_glass_brain(
+        img, output_file=os.path.join(ATLAS_DIR, f"{key}_glass.png"),
+        display_mode="ortho", colorbar=True, cmap=GLASS_CMAP, plot_abs=False,
+        black_bg=True, title=display,
+    )
+
+def glass_from_coords(key, display):
+    """Node / mesh-without-volume atlas → markers on a glass brain."""
+    regions = json.load(open(os.path.join(ATLAS_DIR, f"{key}.json")))["regions"]
+    sig = [r for r in regions if r["sig"]] or regions
+    coords = np.array([[r["x"], r["y"], r["z"]] for r in sig])
+    vals = np.array([r["score"] for r in sig])
+    plotting.plot_markers(
+        vals, coords, node_cmap=GLASS_CMAP, node_size=28,
+        display_mode="ortho", black_bg=True, title=display,
+        output_file=os.path.join(ATLAS_DIR, f"{key}_glass.png"),
+    )
+
+def build_glass_all():
+    index = json.load(open(os.path.join(ATLAS_DIR, "index.json")))
+    for e in index:
+        key, display = e["key"], e.get("label", e["key"])
+        try:
+            if e.get("volume"):
+                glass_from_volume(key, display)
+            else:
+                glass_from_coords(key, display)
+            print(f"  ✓ {key}_glass.png")
+        except Exception as ex:
+            print(f"  ✗ {key}: {ex}")
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", help="comma-separated atlas keys")
+    ap.add_argument("--glass-only", action="store_true", help="(re)render glass-brain PNGs only")
     args = ap.parse_args()
+    if args.glass_only:
+        build_glass_all()
+        sys.exit(0)
     keys = args.only.split(",") if args.only else list(ATLASES)
     entries = [build_atlas(k, ATLASES[k]) for k in keys]
     merge_index(entries)
