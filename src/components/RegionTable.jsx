@@ -27,7 +27,7 @@ export default function RegionTable({ atlas, showAll = false }) {
         <thead className="border-b border-rule/20 bg-paper">
           <tr>
             <th className={th} onClick={() => toggle("id")}>#</th>
-            <th className={th} onClick={() => toggle("name")}>Region</th>
+            <th className={th + " w-full"} onClick={() => toggle("name")}>Region</th>
             <th className={th} onClick={() => toggle("lobe")}>Lobe</th>
             <th className={th} onClick={() => toggle("hemi")}>Hemi</th>
             <th className={th + " text-right pr-5"} onClick={() => toggle("score")}>Importance ↕</th>
@@ -37,10 +37,10 @@ export default function RegionTable({ atlas, showAll = false }) {
         <tbody>
           {rows.map((r, i) => (
             <tr key={r.id} className={`border-b border-rule/10 hover:bg-paper transition-colors ${i % 2 ? "bg-paper/40" : ""}`}>
-              <td className={td + " text-ink2"}>{r.id}</td>
-              <td className={td + " font-semibold text-ink"}>{r.name}</td>
-              <td className={td + " text-ink2"}>{r.lobe}</td>
-              <td className={td + " text-ink2 text-center"}>{r.hemi}</td>
+              <td className={td + " text-ink2 whitespace-nowrap"}>{r.id}</td>
+              <td className={td + " font-semibold text-ink w-full"}>{r.name}</td>
+              <td className={td + " text-ink2 whitespace-nowrap"}>{r.lobe}</td>
+              <td className={td + " text-ink2 text-center whitespace-nowrap"}>{r.hemi}</td>
               <td className={td + " pr-5"}>
                 <div className="flex items-center gap-2 justify-end">
                   <div className="w-16 h-1.5 rounded-full bg-rule/20 overflow-hidden">

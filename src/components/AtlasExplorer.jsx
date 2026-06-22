@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, Suspense, lazy } from "react";
+import { useState, useEffect, useMemo, useRef, Suspense, lazy } from "react";
 import { loadAtlasIndex, loadAtlas } from "../lib/atlas";
 import GlassBrain2D from "./GlassBrain2D";
 import RegionTable from "./RegionTable";
@@ -44,9 +44,20 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
   const [view, setView] = useState(defaultView);
   const [mode3d, setMode3d] = useState("mesh"); // "mesh" | "volume"
   const [showAll, setShowAll] = useState(false);
+  const [seen, setSeen] = useState(false); // defer heavy 3D libs until scrolled into view
+  const boxRef = useRef(null);
 
   useEffect(() => { loadAtlasIndex().then(setIndex); }, []);
   useEffect(() => { setData(null); setMode3d("mesh"); loadAtlas(atlasKey).then(setData); }, [atlasKey]);
+  useEffect(() => {
+    if (!boxRef.current || seen) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setSeen(true); obs.disconnect(); } },
+      { rootMargin: "300px" } // start loading just before it reaches the viewport
+    );
+    obs.observe(boxRef.current);
+    return () => obs.disconnect();
+  }, [seen]);
 
   const meta = useMemo(() => index?.find((e) => e.key === atlasKey), [index, atlasKey]);
   const atlas = useMemo(() => (data && meta ? { ...data, ...meta } : data), [data, meta]);
@@ -63,9 +74,12 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
   const sig = atlas.regions.filter((r) => r.sig).length;
   const has3d = view === "3d" || view === "split";
   const canCompare = has3d && !!atlas.volume;
+  // Heavy 3D (three.js / NiiVue) mounts only once the Explorer is in view.
+  const viewer3d = (h) =>
+    seen ? <Viewer3D atlas={atlas} mode={mode3d} height={h} /> : <Loading label="Loading 3D viewer…" height={h} />;
 
   return (
-    <div className="rounded-xl border border-rule/20 overflow-hidden">
+    <div ref={boxRef} className="rounded-xl border border-rule/20 overflow-hidden">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-3 px-4 py-3 bg-paper border-b border-rule/20">
         <label className="flex items-center gap-2">
@@ -120,7 +134,7 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
 
       {/* Content */}
       <div className="p-4">
-        {view === "3d" && <Viewer3D atlas={atlas} mode={mode3d} height={560} />}
+        {view === "3d" && viewer3d(560)}
         {view === "2d" && <GlassBrain2D atlas={atlas} />}
         {view === "table" && <RegionTable atlas={atlas} showAll={showAll} />}
         {view === "split" && (
@@ -131,7 +145,7 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
             </div>
             <div>
               <p className="font-mono text-[10px] text-ink2 uppercase tracking-wider mb-2">3D brain</p>
-              <Viewer3D atlas={atlas} mode={mode3d} height={520} />
+              {viewer3d(520)}
             </div>
           </div>
         )}

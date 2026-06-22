@@ -10,12 +10,12 @@ export default function DataTable({ columns = [], rows = [], caption }) {
         <table className="w-full border-collapse text-left font-serif text-sm">
           <thead>
             <tr className="bg-paper2">
-              {columns.map((c) => (
+              {columns.map((c, i) => (
                 <th
                   key={c.key}
                   className={`font-sans font-semibold text-ink px-4 py-3 border-b border-rule/20 whitespace-nowrap ${
-                    c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : ""
-                  }`}
+                    i === 0 ? "w-full" : ""
+                  } ${c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : ""}`}
                 >
                   {c.label}
                 </th>
@@ -25,12 +25,12 @@ export default function DataTable({ columns = [], rows = [], caption }) {
           <tbody>
             {rows.map((row, i) => (
               <tr key={i} className="even:bg-paper2/40">
-                {columns.map((c) => (
+                {columns.map((c, ci) => (
                   <td
                     key={c.key}
-                    className={`text-ink2 px-4 py-2.5 border-b border-rule/10 tabular-nums ${
-                      c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : ""
-                    }`}
+                    className={`text-ink2 px-4 py-2.5 border-b border-rule/10 tabular-nums whitespace-nowrap ${
+                      ci === 0 ? "w-full whitespace-normal" : ""
+                    } ${c.align === "right" ? "text-right" : c.align === "center" ? "text-center" : ""}`}
                   >
                     {row[c.key]}
                   </td>
