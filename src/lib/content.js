@@ -18,7 +18,11 @@ const baseName = (p) => p.split("/").pop().replace(/\.\w+$/, "");
 function parseDoc(raw) {
   let data = {}, body = raw;
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
-  if (m) { data = loadYaml(m[1]) || {}; body = m[2]; }
+  if (m) {
+    try { data = loadYaml(m[1]) || {}; }
+    catch (e) { console.error("Front-matter formatting error (this section will look blank until fixed):", e.message); }
+    body = m[2];
+  }
   body = body.trim();
   return { ...data, html: body ? marked.parse(body) : "", bodyText: body };
 }
@@ -44,7 +48,9 @@ function parseCSV(text) {
 const md = Object.fromEntries(Object.entries(mdFiles).map(([p, raw]) => [baseName(p), parseDoc(raw)]));
 const csv = Object.fromEntries(Object.entries(csvFiles).map(([p, raw]) => [baseName(p), parseCSV(raw)]));
 
-const cfg = loadYaml(cfgRaw) || {};
+let cfg = {};
+try { cfg = loadYaml(cfgRaw) || {}; }
+catch (e) { console.error("content/config.yml formatting error — check indentation/quotes:", e.message); }
 const resultsRows = csv["results-table"] || [];
 const resultsCols = resultsRows.length
   ? Object.keys(resultsRows[0]).map((h, i) => ({ key: h, label: h, align: i === 0 ? undefined : "right" }))

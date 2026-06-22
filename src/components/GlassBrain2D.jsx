@@ -11,6 +11,7 @@ export default function GlassBrain2D({ atlas }) {
         <img
           src={`${BASE}assets/atlases/${atlas.key}_glass.png`}
           alt={`${atlas.label} glass-brain projection`}
+          loading="lazy"
           className="block w-full h-auto"
         />
       </div>

@@ -96,4 +96,4 @@ Deploy to **GitHub Pages** (free):
 > Pushing the workflow file over an HTTPS token needs the `workflow` scope; if
 > that errors, push over SSH instead.
 
-That's it — edit `site.config.js`, drop in figures, push.
+That's it — edit the files in `content/`, drop in figures, push.

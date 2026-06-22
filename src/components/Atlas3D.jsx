@@ -7,7 +7,8 @@ import { fitMniToMesh, loadAtlas } from "../lib/atlas";
 
 const MESH_BASE = `${import.meta.env.BASE_URL}assets/meshes/`;
 const SHELL_URL = `${MESH_BASE}atlas.glb`; // Brainnetome mesh doubles as the node-atlas shell
-useGLTF.preload(SHELL_URL);
+// (no eager useGLTF.preload — meshes load on demand when an atlas is selected,
+//  so we don't fetch the 6.4 MB shell for mesh atlases that use a different GLB)
 const BG = "#141E2D";
 
 // Categorical lobe palette — every atlas CSV carries a `lobe`, so this is the

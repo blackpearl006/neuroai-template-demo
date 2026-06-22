@@ -35,6 +35,7 @@ export default function Gallery({ items = [], cols = 3, caption }) {
             <img
               src={it.src}
               alt={it.alt || it.caption || `image ${i + 1}`}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </button>

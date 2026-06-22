@@ -27,11 +27,17 @@ export default function Hero() {
           {hero.eyebrow}
         </p>
       )}
-      <h1 className="font-sans text-5xl md:text-6xl font-bold text-ink leading-[1.1] max-w-[22ch]">
+      <h1 className="font-sans text-5xl md:text-6xl font-semibold text-ink leading-[1.1] max-w-[22ch]">
         {renderTitle(identity.title, identity.titleAccent)}
       </h1>
+      {(identity.authors || identity.institution) && (
+        <p className="mt-5 font-sans text-base text-ink">
+          {identity.authors}
+          {identity.authors && identity.institution ? <span className="text-ink2"> · {identity.institution}</span> : identity.institution}
+        </p>
+      )}
       <p
-        className="mt-6 font-serif text-xl text-ink2 max-w-[58ch] leading-relaxed"
+        className="mt-5 font-serif text-xl text-ink2 max-w-[58ch] leading-relaxed"
         dangerouslySetInnerHTML={{ __html: hero.taglineHtml }}
       />
       <div className="flex flex-wrap gap-3 mt-8">

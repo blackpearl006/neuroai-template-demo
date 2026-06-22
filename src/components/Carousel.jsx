@@ -43,6 +43,7 @@ export default function Carousel({ items = [], interval = 4000, height = 420 }) 
               key={idx}
               src={it.src}
               alt={it.alt || it.caption || `slide ${idx + 1}`}
+              loading={idx === 0 ? "eager" : "lazy"}
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${idx === i ? "opacity-100" : "opacity-0"}`}
             />
           ))}

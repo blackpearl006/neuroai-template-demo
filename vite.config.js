@@ -5,7 +5,10 @@ import { fileURLToPath } from "node:url";
 import { load as loadYaml } from "js-yaml";
 
 // Read the editable settings (content/config.yml) at build for <title>/meta.
-const ymlCfg = loadYaml(readFileSync(fileURLToPath(new URL("./content/config.yml", import.meta.url)), "utf8")) || {};
+// Guarded so a YAML typo degrades gracefully instead of failing the build.
+let ymlCfg = {};
+try { ymlCfg = loadYaml(readFileSync(fileURLToPath(new URL("./content/config.yml", import.meta.url)), "utf8")) || {}; }
+catch (e) { console.error("content/config.yml formatting error:", e.message); }
 const siteConfig = { meta: { lang: "en", ...(ymlCfg.meta || {}) }, deploy: { basePath: "./" } };
 
 // Inject <title> + social/SEO meta from content/config.yml into index.html

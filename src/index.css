@@ -61,7 +61,7 @@
 }
 
 /* Rendered Markdown from /content/*.md — readable paper prose. */
-.prose-paper { @apply font-serif text-ink2 leading-relaxed; }
+.prose-paper { @apply font-serif text-ink leading-relaxed; }
 .prose-paper > :first-child { margin-top: 0; }
 .prose-paper > :last-child { margin-bottom: 0; }
 .prose-paper p { @apply my-4; }
