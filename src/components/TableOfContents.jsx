@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import config from "../config";
 
 // Sticky, hoverable table of contents built from the `nav` labels in
-// site.config.js. Dashes are always visible; labels reveal on hover. The
+// content/config.yml. Dashes are always visible; labels reveal on hover. The
 // section currently in view is highlighted (scrollspy via IntersectionObserver).
 // Hidden on small screens (< lg). Rendered once from App.jsx.
 export default function TableOfContents() {

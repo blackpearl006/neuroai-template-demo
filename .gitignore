@@ -6,3 +6,6 @@ dist/
 .claude/
 gifs/
 ROADMAP_VIZ.txt
+
+__pycache__/
+*.pyc

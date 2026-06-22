@@ -4,7 +4,7 @@ import config from "../config";
 
 // The interactive centrepiece: pick a brain atlas, pick a view (3D / 2D /
 // table / split) and explore which regions matter. Fully generic — no cohorts,
-// analyses or thresholds. Edit text in site.config.js → content.explorer.
+// analyses or thresholds. Edit text in content/config.yml → content.explorer.
 export default function Explorer() {
   const c = config.content.explorer || {};
   return (

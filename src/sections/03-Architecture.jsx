@@ -3,7 +3,7 @@ import Architecture from "../components/Architecture";
 import config from "../config";
 
 // The model. A clean Clarity-style SFCN diagram instead of a wall of text.
-// Edit text/diagram in site.config.js → content.architecture.
+// Edit text/diagram in content/config.yml → content.architecture.
 export default function ArchitectureSection() {
   const c = config.content.architecture || {};
   return (

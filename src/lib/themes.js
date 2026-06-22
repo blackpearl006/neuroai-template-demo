@@ -29,8 +29,8 @@ export const THEMES = {
       paper:  "13 17 28",
       paper2: "23 29 44",
       ink:    "233 237 243",
-      ink2:   "150 162 184",
-      rule:   "120 134 160",
+      ink2:   "162 174 196",
+      rule:   "150 165 192",
       accent: "240 178 90",
       sig:    "233 110 100",
     },
@@ -44,7 +44,7 @@ export const THEMES = {
       paper:  "248 246 252", // cards sit on a soft tint
       paper2: "255 255 255",
       ink:    "32 27 56",
-      ink2:   "92 84 128",
+      ink2:   "70 62 104",
       rule:   "120 110 160",
       accent: "168 85 247",  // violet
       sig:    "219 39 119",  // fuchsia

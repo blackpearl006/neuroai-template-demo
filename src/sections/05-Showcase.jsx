@@ -38,7 +38,7 @@ const TABLE_ROWS = [
 const SLICES = ["axial_1", "axial_3", "axial_5", "coronal_1", "coronal_2", "sagittal_1", "sagittal_2", "axial_6"];
 
 // A living catalogue of the template's content + brain-render primitives.
-// Powers the `?variant=minimal` preview; copy any block into your own sections.
+// Copy any block into your own sections.
 export default function Showcase() {
   return (
     <Section
@@ -109,7 +109,7 @@ export default function Showcase() {
 
 const Block = ({ title, children }) => (
   <div className="mt-8 first:mt-2">
-    <p className="font-mono text-[11px] uppercase tracking-widest text-ink2/70 mb-3">{title}</p>
+    <p className="font-sans text-sm font-semibold text-ink2 mb-3">{title}</p>
     {children}
   </div>
 );

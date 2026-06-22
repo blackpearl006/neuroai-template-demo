@@ -15,7 +15,7 @@ a wrong number is worse than one with a clearly-marked `TODO`.
 
 1. **Never invent numbers, results, citations, or claims.** Copy them verbatim from
    the source paper, or insert `TODO(author): …`. This is non-negotiable.
-2. **Edit `src/site.config.js` first and most.** ~80% of customization is there.
+2. **Edit `content/config.yml` first and most.** ~80% of customization is there.
    Avoid touching component internals unless a section genuinely needs new structure.
 3. **Keep the build green.** Run `npm run build` after each meaningful change.
 4. **Don't delete** the minimal variant, the showcase section, or scaffolding/components.
@@ -63,7 +63,7 @@ paper. The `showcase` section is a toolbox demo; disable it for the published si
 
 ---
 
-## 3. Phase 1 — autonomous first pass (edit `src/site.config.js`)
+## 3. Phase 1 — autonomous first pass (edit `content/config.yml`)
 
 1. **identity**: `title` (+ pick an `titleAccent` word that appears in the title),
    `tagline` (one plain-language sentence), `eyebrow`, `authors`, `institution`,
@@ -143,7 +143,7 @@ the Actions run is green and the live URL renders. (Pages source must be set to
 
 | Need to change… | File |
 |---|---|
-| Title, authors, links, theme, fonts, sections, hero/abstract/resources text | `src/site.config.js` |
+| Title, authors, links, theme, fonts, sections, hero/abstract/resources text | `content/config.yml` |
 | Methods / Preprocessing narrative | `src/sections/03-Methods.jsx`, `src/sections/04-Preprocessing.jsx` |
 | Colour themes / font pairings | `src/lib/themes.js`, `src/lib/fonts.js` |
 | Fingerprint-explorer data | `public/assets/data/*.json` (regenerate via `scripts/`) |

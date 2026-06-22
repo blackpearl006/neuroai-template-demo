@@ -7,7 +7,6 @@ import Explorer      from "./sections/02-Explorer";
 import Results       from "./sections/06-Results";
 import Resources     from "./sections/04-Resources";
 import Showcase      from "./sections/05-Showcase";
-import FontSizeControl    from "./components/FontSizeControl";
 import AppearanceControls from "./components/AppearanceControls";
 import TableOfContents    from "./components/TableOfContents";
 
@@ -31,7 +30,6 @@ export default function App() {
 
   return (
     <main>
-      <FontSizeControl />
       {config.showThemeToggle && <AppearanceControls />}
       <TableOfContents />
 

@@ -6,7 +6,7 @@ const A = (p) => `${import.meta.env.BASE_URL}${p}`;
 const DEFAULT_STEPS = ["Bias correction", "Brain extraction", "Linear registration", "WM normalisation"];
 
 // Light-weight preprocessing summary: a step chip-row + one before/after figure.
-// Edit text/steps in site.config.js → content.preprocessing.
+// Edit text/steps in content/config.yml → content.preprocessing.
 export default function Preprocessing() {
   const c = config.content.preprocessing || {};
   const steps = c.steps || DEFAULT_STEPS;
@@ -28,9 +28,9 @@ export default function Preprocessing() {
         ))}
       </div>
       <CompareSlider
-        before={{ src: A("assets/preprocessing/raw.png"), label: "Raw" }}
-        after={{ src: A("assets/preprocessing/brain.png"), label: "Preprocessed" }}
-        caption="Raw T1 scan vs. the bias-corrected, skull-stripped volume the model sees. Drag to compare."
+        before={{ src: A(c.before || "assets/preprocessing/raw.png"), label: c.beforeLabel || "Raw" }}
+        after={{ src: A(c.after || "assets/preprocessing/brain.png"), label: c.afterLabel || "Preprocessed" }}
+        caption={c.caption || "Raw T1 scan vs. the bias-corrected, skull-stripped volume the model sees. Drag to compare."}
         height={360}
       />
     </Section>

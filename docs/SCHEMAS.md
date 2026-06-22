@@ -3,7 +3,7 @@
 The fingerprint explorer (`Playground`, `Comparisons`, `ROITable`, `NetworkRadar`)
 reads two JSON files from `public/assets/data/`. Regenerate them with
 `scripts/build_data.py` (see `scripts/config.py` for inputs). Array lengths must
-equal `taxonomy.roiCount` in `src/site.config.js`.
+equal `taxonomy.roiCount` in `content/config.yml`.
 
 ## `regions.json`
 

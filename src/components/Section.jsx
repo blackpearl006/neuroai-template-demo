@@ -11,7 +11,7 @@ export default function Section({ eyebrow, title, lede, children, id }) {
           <h2 className="font-sans text-3xl font-bold text-ink leading-tight">{title}</h2>
         </div>
         {lede && (
-          <p className="md:col-span-8 font-serif text-lg text-ink2 leading-relaxed self-end">
+          <p className="md:col-span-7 font-serif text-lg text-ink2 leading-relaxed self-start">
             {lede}
           </p>
         )}

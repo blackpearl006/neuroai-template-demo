@@ -117,32 +117,43 @@ function NodeScene({ regions, colorMode, shellOpacity, onHover }) {
     return pairs.length > 10 ? fitMniToMesh(pairs) : null;
   }, [ref, scene]);
 
+  const instRef = useRef(null);
   const maxScore = useMemo(() => Math.max(1e-6, ...regions.map((r) => r.score)), [regions]);
   const nodes = useMemo(() => {
     if (!toMesh) return [];
     return regions.map((r) => ({ r, pos: toMesh([r.x, r.y, r.z]) }));
   }, [regions, toMesh]);
 
+  // One InstancedMesh for all node spheres — keeps 360-region atlases to a single
+  // draw call (vs. hundreds of meshes). Position+scale per instance, colour per instance.
+  useEffect(() => {
+    const mesh = instRef.current;
+    if (!mesh || !nodes.length) return;
+    const dummy = new THREE.Object3D();
+    nodes.forEach(({ r, pos }, i) => {
+      dummy.position.set(pos[0], pos[1], pos[2]);
+      dummy.scale.setScalar(r.sig ? 6 : 3.2);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(i, dummy.matrix);
+      mesh.setColorAt(i, new THREE.Color(r.sig ? regionColor(r, colorMode, maxScore) : "#93a6bb"));
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }, [nodes, colorMode, maxScore]);
+
   if (!toMesh) return <primitive object={shell} />;
   return (
     <group>
       <primitive object={shell} />
-      {nodes.map(({ r, pos }) => (
-        <mesh
-          key={r.id}
-          position={pos}
-          renderOrder={r.sig ? 2 : 1}
-          onPointerOver={(e) => { e.stopPropagation(); onHover?.(r, e.clientX, e.clientY); }}
-          onPointerOut={() => onHover?.(null)}
-        >
-          <sphereGeometry args={[r.sig ? 6 : 3, 16, 16]} />
-          <meshBasicMaterial
-            color={r.sig ? regionColor(r, colorMode, maxScore) : "#9fb4c8"}
-            transparent={!r.sig}
-            opacity={r.sig ? 1 : 0.35}
-          />
-        </mesh>
-      ))}
+      <instancedMesh
+        ref={instRef}
+        args={[undefined, undefined, nodes.length]}
+        onPointerMove={(e) => { e.stopPropagation(); if (e.instanceId != null) onHover?.(nodes[e.instanceId]?.r, e.clientX, e.clientY); }}
+        onPointerOut={() => onHover?.(null)}
+      >
+        <sphereGeometry args={[1, 16, 16]} />
+        <meshBasicMaterial transparent opacity={0.95} />
+      </instancedMesh>
     </group>
   );
 }
@@ -203,7 +214,7 @@ export default function Atlas3D({ atlas, height = 520 }) {
         <span className="font-mono text-[11px] text-paper/60"> important regions</span>
       </div>
 
-      <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-ink/70 backdrop-blur-sm rounded-lg flex">
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-ink/70 backdrop-blur-sm rounded-lg hidden sm:flex">
         <ModeBtn active={colorMode === "importance"} onClick={() => setColorMode("importance")}>Importance</ModeBtn>
         <ModeBtn active={colorMode === "lobe"} onClick={() => setColorMode("lobe")}>Lobe</ModeBtn>
       </div>

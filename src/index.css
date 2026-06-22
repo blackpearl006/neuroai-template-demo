@@ -4,7 +4,7 @@
 
 @layer base {
   /* First-paint defaults (light · editorial). lib/appearance.js overrides these
-     at boot from the active theme/font in site.config.js. Keep in sync with
+     at boot from the active theme/font in content/config.yml. Keep in sync with
      THEMES.light in src/lib/themes.js so there's no flash of wrong colour. */
   :root {
     --c-paper: 250 247 242;

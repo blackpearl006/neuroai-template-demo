@@ -71,7 +71,7 @@ export default function Hero() {
         </div>
       )}
 
-      {/* Optional project cover image. Omit `hero.cover` in site.config.js for
+      {/* Optional project cover image. Omit `hero.cover` in content/config.yml for
           Clarity's "no-cover" title layout (the default). */}
       {hero.cover && (
         <figure className="mt-12 rounded-2xl overflow-hidden border border-rule/20">

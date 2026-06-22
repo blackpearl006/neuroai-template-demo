@@ -140,11 +140,11 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
         {view === "split" && (
           <div className="grid lg:grid-cols-2 gap-4 items-start">
             <div>
-              <p className="font-mono text-[10px] text-ink2 uppercase tracking-wider mb-2">Region table</p>
+              <p className="font-sans text-xs font-medium text-ink2 mb-2">Region table</p>
               <RegionTable atlas={atlas} showAll={showAll} />
             </div>
             <div>
-              <p className="font-mono text-[10px] text-ink2 uppercase tracking-wider mb-2">3D brain</p>
+              <p className="font-sans text-xs font-medium text-ink2 mb-2">3D brain</p>
               {viewer3d(520)}
             </div>
           </div>
