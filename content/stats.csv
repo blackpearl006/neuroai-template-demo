@@ -1,5 +1,5 @@
 stat,label,detail
-3,content formats,"Markdown, CSV and YAML — no JSX"
-12+,components,"viewers, carousel, gallery, math, code…"
-3,themes,"light · dark · gradient, switchable live"
-0,build config,push to main → GitHub Pages deploys
+8,cohorts,"ADNI, OASIS-3, Cam-CAN, IXI… 4 continents"
+"12,480",T1 MRI scans,healthy controls
+6–94,age range (yr),full lifespan coverage
+246,brain regions,Brainnetome parcellation

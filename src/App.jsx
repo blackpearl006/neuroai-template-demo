@@ -33,6 +33,18 @@ export default function App() {
       {config.showThemeToggle && <AppearanceControls />}
       <TableOfContents />
 
+      {config.configError && (
+        <div className="max-w-wide mx-auto px-6 pt-6">
+          <div className="rounded-lg border border-sig/40 bg-sig/5 px-4 py-3">
+            <p className="font-mono text-[11px] uppercase tracking-widest text-sig mb-1">config.yml needs a look</p>
+            <p className="font-serif text-sm text-ink2">
+              A formatting slip in <code className="font-mono text-ink">content/config.yml</code> means settings
+              fell back to defaults — check indentation and quotes near: <span className="text-ink">{config.configError}</span>
+            </p>
+          </div>
+        </div>
+      )}
+
       {sections.map((s, i) => {
         const Cmp = REGISTRY[s.id];
         return (

@@ -4,6 +4,15 @@ A step-by-step for reusing this template for a new paper/study (e.g. for a
 friend). **No coding required** — you edit Markdown, CSV and one settings file,
 all inside the `content/` folder.
 
+> The template opens as a **complete demo paper** — *"Cortical Signatures of
+> Brain Age."* That's so you can see a finished page; everything in it is just
+> placeholder content for you to overwrite. Making it yours = replacing that
+> demo text and those numbers, file by file, below.
+>
+> Want to see every component the template ships with (carousels, galleries,
+> math, code, sliders, brain viewers)? Set `showcase → enabled: true` in
+> `config.yml` — it's off by default so the page reads as a real paper.
+
 ## 0. One-time setup
 
 ```bash

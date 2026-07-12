@@ -4,7 +4,9 @@ import config from "../config";
 // Sticky, hoverable table of contents built from the `nav` labels in
 // content/config.yml. Dashes are always visible; labels reveal on hover. The
 // section currently in view is highlighted (scrollspy via IntersectionObserver).
-// Hidden on small screens (< lg). Rendered once from App.jsx.
+// Only shown at ≥2xl (1536px), where the centred max-w-wide container leaves a
+// real left gutter — below that the fixed rail would overlap the content.
+// Rendered once from App.jsx.
 export default function TableOfContents() {
   const items = config.sections.filter((s) => s.enabled && s.nav);
   const [active, setActive] = useState(items[0]?.id);
@@ -26,7 +28,7 @@ export default function TableOfContents() {
   if (items.length < 2) return null;
 
   return (
-    <nav className="hidden lg:block fixed left-6 top-1/2 -translate-y-1/2 z-40 group">
+    <nav className="hidden 2xl:block fixed left-6 top-1/2 -translate-y-1/2 z-40 group">
       <ul className="space-y-2.5">
         {items.map((s) => {
           const on = active === s.id;

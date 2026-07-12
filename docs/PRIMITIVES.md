@@ -1,7 +1,8 @@
 # Primitives reference
 
 Copy-paste building blocks for your sections. Import from `../components/<Name>`.
-See them all live at `?variant=minimal` (the Showcase section).
+See them all live in the **Showcase** section — enable it with
+`enabled: true` on the `showcase` line in `config.yml → sections`.
 
 ---
 
@@ -38,6 +39,40 @@ Token colours follow the active theme (see `src/styles/code.css`).
 ```
 `columns[].align`: `"left"` (default) / `"center"` / `"right"`.
 
+### `<BarChart>` — hand-rolled SVG bars (grouped / stacked)
+```jsx
+<BarChart rows={maeRows} categoryKey="Cohort" unit=" yr"
+          colors={["#C8312B", "#94A0B4"]} caption="…" />          {/* grouped */}
+<BarChart rows={lobeRows} categoryKey="Hemisphere" stacked unit="%" caption="…" /> {/* stacked */}
+```
+`rows` is a wide array of objects (first key = category, each other key = a series) —
+exactly what a `content/*.csv` parses to. No chart library.
+| prop | default | notes |
+|---|---|---|
+| `rows` | `[]` | wide-format row objects |
+| `categoryKey` | first column | which key is the x-axis category |
+| `stacked` | `false` | stack the series instead of grouping them |
+| `unit` | `""` | appended in tooltips |
+| `colors` | on-brand palette | array of CSS colours, one per series |
+| `height` | `280` | viewBox height |
+
+### `<Callout>` — note / tip / warning box
+```jsx
+<Callout kind="tip" title="Heads up">Body text or elements…</Callout>
+```
+`kind`: `"note"` (default) / `"tip"` / `"warning"`. `title` optional.
+
+### `<Carousel>` — auto-advancing image carousel
+```jsx
+<Carousel items={[{ src: "assets/a.png", caption: "…", alt: "…" }]} interval={4000} height={420} />
+```
+
+### `<Gallery>` — responsive image grid with lightbox
+```jsx
+<Gallery cols={3} items={[{ src: "assets/a.png", alt: "…", caption: "…" }]} caption="…" />
+```
+`cols`: 1–4 (responsive). Click any tile to open the lightbox.
+
 ### `<CompareSlider>` — before/after (Healthy/Unhealthy)
 ```jsx
 <CompareSlider
@@ -71,7 +106,7 @@ Autoplay is suppressed under `prefers-reduced-motion`. `controls`, `loop`, `mute
 |---|---|---|
 | `image` | static PNG (glass brain, slice, figure) | `src`, `alt`, `caption` |
 | `volume` | interactive NIfTI viewer (NiiVue) | `url`, `overlay`, `colormap`, `height` |
-| `mesh` | 3D atlas mesh, rotate/auto-rotate built in | `counts`, `sig`, `regions`, `height` |
+| `mesh` | 3D atlas mesh (legacy — routes to `BrainnetomeAtlas`; prefer the Explorer / `Atlas3D`) | `counts`, `sig`, `regions`, `height` |
 | `video` | mp4/webm | `src`, `autoplay`, `loop`, `muted` |
 | `gif` | animated gif | `src` |
 | `compare` | before/after slider | `before`, `after` |
@@ -100,13 +135,18 @@ repo-relative — the base path is added automatically. Heavy viewers lazy-load.
 
 | Component | Purpose |
 |---|---|
-| `NiiVueViewer` | full NIfTI multiplanar/3D viewer (`url`, `overlay`, `colormap`, `height`) |
-| `BrainnetomeAtlas` | 3D atlas mesh from `atlas.glb` + region data |
+| `AtlasExplorer` | the full brain explorer used by the Explorer section: atlas picker + 3D / 2D / table / split views |
+| `Atlas3D` | 3D atlas surface mesh or coordinate nodes (three.js) |
+| `AtlasVolume` | NiiVue label-volume view (parcellated atlases) |
+| `GlassBrain2D` | pre-rendered nilearn glass-brain PNG for an atlas |
+| `RegionTable` | sortable ROI table (importance · lobe · hemi) |
+| `NiiVueViewer` | general NIfTI multiplanar/3D viewer (`url`, `overlay`, `colormap`, `height`) |
 | `GlassBrain` | static image with caption |
-| `PreprocessingPipeline` | step-through NIfTI stage carousel |
-| `ROITable`, `NetworkRadar`, `FilterBar` | fingerprint-explorer pieces |
 | `Section` | section shell (`eyebrow`, `title`, `lede`, `id`) — wrap your content |
-| `ReadMore`, `FigureModal`, `FontSizeControl`, `AppearanceControls` | UI helpers |
+| `Markdown`, `ReadMore`, `FigureModal`, `AppearanceControls`, `TableOfContents` | prose + UI helpers |
+
+> `BrainnetomeAtlas` is a legacy Brainnetome-only viewer, superseded by `Atlas3D` —
+> don't use it in new sections.
 
 ---
 

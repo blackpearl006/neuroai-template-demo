@@ -12,6 +12,12 @@ style) by editing **Markdown, CSV and one settings file** — no coding.
 Stack: **Vite + React + Tailwind + Three.js + NiiVue**. Deploys free on **GitHub Pages**.
 Full walkthrough in [`HOWTO.md`](HOWTO.md).
 
+> **It ships as a finished demo paper** — *"Cortical Signatures of Brain Age"* —
+> so the first thing you see is a complete, polished page rather than empty
+> scaffolding. Replace the demo text/numbers in `content/` with your own. The
+> component **showcase** (every building block in one place) ships **off**; flip
+> `showcase → enabled: true` in `config.yml` to browse it.
+
 ---
 
 ## 🚀 Quick start
@@ -25,14 +31,28 @@ npm run dev          # open the printed localhost URL
 
 Then edit the files in **`content/`** (see below). Save; the page hot-reloads.
 
-### Deploy (GitHub Pages, via Actions)
+### 📤 Publish it (GitHub Pages)
 
-1. Create a repo and push. For a **user/org site** name it `your-name.github.io`; for a **project site** any name works.
-2. In **Settings → Pages → Build and deployment → Source**, choose **GitHub Actions**.
-3. Push to `main`. The included workflow (`.github/workflows/deploy.yml`) builds and deploys automatically.
+Three steps — no manual building, no uploads:
 
-> **Base path** is `"./"`, which works for both a root user-site and a project
-> subpath without changes — it's a single-page app.
+1. **Create a GitHub repo** and push this project to it. Any repo name works
+   (e.g. `my-paper`); for a root site name it `your-username.github.io`.
+2. On GitHub, go to **Settings → Pages → Build and deployment → Source** and
+   choose **GitHub Actions**.
+3. **Push to the `main` branch.**
+
+That's it. The included workflow ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))
+builds and deploys automatically on every push to `main`. Watch the green ✓ under
+the repo's **Actions** tab — the first deploy takes ~1–2 min.
+
+Your site goes live at:
+
+```
+https://<your-username>.github.io/<repo-name>/
+```
+
+> **No config to change.** Base path is `"./"` (relative), so the same build
+> works whether it's a root user-site or a project subpath.
 
 ---
 

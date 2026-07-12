@@ -49,8 +49,9 @@ const md = Object.fromEntries(Object.entries(mdFiles).map(([p, raw]) => [baseNam
 const csv = Object.fromEntries(Object.entries(csvFiles).map(([p, raw]) => [baseName(p), parseCSV(raw)]));
 
 let cfg = {};
+let configError = null;
 try { cfg = loadYaml(cfgRaw) || {}; }
-catch (e) { console.error("content/config.yml formatting error — check indentation/quotes:", e.message); }
+catch (e) { configError = e.message; console.error("content/config.yml formatting error — check indentation/quotes:", e.message); }
 const resultsRows = csv["results-table"] || [];
 const resultsCols = resultsRows.length
   ? Object.keys(resultsRows[0]).map((h, i) => ({ key: h, label: h, align: i === 0 ? undefined : "right" }))
@@ -63,6 +64,7 @@ const config = {
   },
   meta: { lang: "en", ...(cfg.meta || {}) },
   deploy: { basePath: "./" },
+  configError,
   theme: cfg.theme || "light",
   fonts: cfg.fonts || "editorial",
   fontScale: cfg.fontScale || "md",
@@ -78,7 +80,8 @@ const config = {
     architecture:  { ...(md.architecture || {}) },
     preprocessing: { ...(md.preprocessing || {}) },
     explorer:      { ...(md.explorer || {}) },
-    results:       { ...(md.results || {}), metrics: csv.metrics || [], table: { columns: resultsCols, rows: resultsRows } },
+    results:       { ...(md.results || {}), metrics: csv.metrics || [], table: { columns: resultsCols, rows: resultsRows },
+                     charts: { mae: csv["chart-mae"] || [], lobes: csv["chart-lobes"] || [] } },
     resources:     { ...(md.resources || {}), links: csv.links || [], citation: (citationRaw || "").trim() },
   },
 };

@@ -1,5 +1,5 @@
 stat,label,detail
-3.1 yr,Mean abs. error,held-out test set
-0.95,Pearson r,predicted vs. true age
-12k,Scans,training + validation
-20%,Regions driving,of the full atlas
+3.1 yr,Mean absolute error,held-out cross-cohort test
+0.95,Pearson r,predicted vs. chronological age
+2.4 yr,Median error,test set
+18,Core regions,drive >50% of saliency

@@ -1,7 +1,7 @@
 ---
 eyebrow: "Explore"
-title: "Important brain regions"
-lede: "Which regions drive the prediction? Pick a brain atlas and a view — interactive 3D mesh, a NiiVue volume, 2D glass-brain projections, or a sortable table. Parcellated atlases (Brainnetome, Schaefer, AAL, Harvard-Oxford, Yeo, Glasser) render as surfaces; the rest as coordinate nodes. (~20% of regions are flagged important — placeholder data.)"
+title: "Which regions drive the prediction?"
+lede: "Integrated-gradients saliency, averaged over the held-out test set and projected onto a brain atlas. Pick an atlas and a view — interactive 3D mesh, a NiiVue volume, 2D glass-brain projections, or a sortable table. Parcellated atlases (Brainnetome, Schaefer, AAL, Harvard-Oxford, Yeo, Glasser) render as surfaces; the rest as coordinate nodes. The most influential ~20% of regions are highlighted."
 defaultAtlas: "brainnetome"
-defaultView: "split"
+defaultView: "2d"
 ---

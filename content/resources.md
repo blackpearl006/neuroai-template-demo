@@ -1,5 +1,5 @@
 ---
 eyebrow: "Resources"
-title: "Get the template"
-lede: "Fork it, edit the files in content/, drop your figures in /public, and push to main — GitHub Pages does the rest. Replace the links (links.csv) and citation (citation.bib) with your own."
+title: "Paper, code & data"
+lede: "Everything behind the study — and the template behind this page. The links and citation below are demo placeholders: replace them in content/links.csv and content/citation.bib. Full instructions in HOWTO.md."
 ---

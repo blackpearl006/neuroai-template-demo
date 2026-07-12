@@ -27,7 +27,7 @@ export default function Hero() {
           {hero.eyebrow}
         </p>
       )}
-      <h1 className="font-sans text-5xl md:text-6xl font-semibold text-ink leading-[1.1] max-w-[22ch]">
+      <h1 className="font-sans text-3xl sm:text-5xl md:text-6xl font-semibold text-ink leading-[1.1] max-w-[22ch] text-balance break-words">
         {renderTitle(identity.title, identity.titleAccent)}
       </h1>
       {(identity.authors || identity.institution) && (
@@ -40,20 +40,26 @@ export default function Hero() {
         className="mt-5 font-serif text-xl text-ink2 max-w-[58ch] leading-relaxed"
         dangerouslySetInnerHTML={{ __html: hero.taglineHtml }}
       />
-      <div className="flex flex-wrap gap-3 mt-8">
-        <a
-          href={hero.primaryCta.href}
-          className="font-mono text-sm bg-ink text-paper px-6 py-2.5 rounded-lg hover:bg-rule transition-colors"
-        >
-          {hero.primaryCta.label}
-        </a>
-        <a
-          href={hero.secondaryCta.href}
-          className="font-mono text-sm border border-rule/40 text-ink2 px-6 py-2.5 rounded-lg hover:text-ink hover:border-ink/60 transition-colors"
-        >
-          {hero.secondaryCta.label}
-        </a>
-      </div>
+      {(hero.primaryCta?.href || hero.secondaryCta?.href) && (
+        <div className="flex flex-wrap gap-3 mt-8">
+          {hero.primaryCta?.href && (
+            <a
+              href={hero.primaryCta.href}
+              className="font-mono text-sm bg-ink text-paper px-6 py-2.5 rounded-lg hover:bg-rule transition-colors"
+            >
+              {hero.primaryCta.label}
+            </a>
+          )}
+          {hero.secondaryCta?.href && (
+            <a
+              href={hero.secondaryCta.href}
+              className="font-mono text-sm border border-rule/40 text-ink2 px-6 py-2.5 rounded-lg hover:text-ink hover:border-ink/60 transition-colors"
+            >
+              {hero.secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )}
 
       {/* Feature chips */}
       {hero.chips?.length > 0 && (
@@ -69,6 +75,38 @@ export default function Hero() {
             </span>
           )}
         </div>
+      )}
+
+      {/* Hero brain — leads with the instant, static glass-brain so the first
+          thing a visitor sees is the science, never a loading spinner. The full
+          interactive viewer (3D mesh / volume / table) lives in the Explorer
+          section; this anchors the hero and points there. */}
+      {hero.brain?.atlas && (
+        <figure className="mt-12 rounded-2xl border border-rule/20 overflow-hidden bg-paper2">
+          <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-rule/20 bg-paper">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-ink2">
+              {hero.brain.label || "Glass brain"}
+            </span>
+            <a
+              href="#explorer"
+              className="font-mono text-[10px] uppercase tracking-widest text-ink2 hover:text-sig transition-colors"
+            >
+              Explore in 3D ↓
+            </a>
+          </div>
+          <div style={{ background: "#000" }}>
+            <img
+              src={asset(`assets/atlases/${hero.brain.atlas}_glass.png`)}
+              alt={`${hero.brain.label || "Brain atlas"} glass-brain projection`}
+              className="block w-full h-auto"
+            />
+          </div>
+          {hero.brain.caption && (
+            <figcaption className="px-4 py-3 border-t border-rule/20 font-serif text-sm text-ink2 italic">
+              {hero.brain.caption}
+            </figcaption>
+          )}
+        </figure>
       )}
 
       {/* Optional project cover image. Omit `hero.cover` in content/config.yml for

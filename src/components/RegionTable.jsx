@@ -7,6 +7,7 @@ import { sequentialColor } from "../lib/theme";
 export default function RegionTable({ atlas, showAll = false }) {
   const [sortKey, setSortKey] = useState("score");
   const [sortDir, setSortDir] = useState(-1);
+  const [expanded, setExpanded] = useState(false);
   const maxScore = useMemo(() => Math.max(1e-6, ...atlas.regions.map((r) => r.score)), [atlas]);
 
   const rows = useMemo(() => {
@@ -17,6 +18,8 @@ export default function RegionTable({ atlas, showAll = false }) {
     });
   }, [atlas, showAll, sortKey, sortDir]);
 
+  const CAP = 12;
+  const visible = expanded ? rows : rows.slice(0, CAP);
   const toggle = (k) => (sortKey === k ? setSortDir((d) => -d) : (setSortKey(k), setSortDir(-1)));
   const th = "px-3 py-2.5 text-left font-mono text-[11px] font-semibold text-ink2 cursor-pointer select-none hover:text-ink whitespace-nowrap";
   const td = "px-3 py-2 font-mono text-xs";
@@ -35,7 +38,7 @@ export default function RegionTable({ atlas, showAll = false }) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((r, i) => (
+          {visible.map((r, i) => (
             <tr key={r.id} className={`border-b border-rule/10 hover:bg-paper transition-colors ${i % 2 ? "bg-paper/40" : ""}`}>
               <td className={td + " text-ink2 whitespace-nowrap"}>{r.id}</td>
               <td className={td + " font-semibold text-ink w-full"}>{r.name}</td>
@@ -57,8 +60,18 @@ export default function RegionTable({ atlas, showAll = false }) {
           )}
         </tbody>
       </table>
-      <div className="px-3 py-2 border-t border-rule/20">
-        <span className="text-[11px] font-mono text-ink2">{rows.length} region{rows.length !== 1 ? "s" : ""} shown</span>
+      <div className="flex items-center justify-between gap-3 px-3 py-2 border-t border-rule/20">
+        <span className="text-[11px] font-mono text-ink2">
+          {rows.length > CAP && !expanded ? `Top ${CAP} of ${rows.length}` : `${rows.length} region${rows.length !== 1 ? "s" : ""}`}
+        </span>
+        {rows.length > CAP && (
+          <button
+            onClick={() => setExpanded((e) => !e)}
+            className="font-mono text-[11px] text-ink2 hover:text-sig transition-colors"
+          >
+            {expanded ? "Show fewer ↑" : `Show all ${rows.length} ↓`}
+          </button>
+        )}
       </div>
     </div>
   );
