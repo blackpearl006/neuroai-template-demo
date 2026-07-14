@@ -260,13 +260,13 @@ export default function Atlas3D({ atlas, height = 520 }) {
       {tooltip && (
         <div className="pointer-events-none absolute z-20 rounded-xl shadow-2xl backdrop-blur-md overflow-hidden" style={{ left: Math.min(tooltip.x + 14, (boxRef.current?.offsetWidth ?? 500) - 230), top: Math.max(8, tooltip.y - 90), minWidth: 210, background: "rgba(15,23,42,0.96)", border: "1px solid rgba(255,255,255,0.08)" }}>
           <div className="px-4 py-2.5 flex items-center justify-between gap-3" style={{ background: lobeColor(tooltip.r.lobe) + "22" }}>
-            <p className="font-mono font-bold text-paper text-sm truncate">{tooltip.r.name}</p>
+            <p className="font-mono font-bold text-white text-sm truncate">{tooltip.r.name}</p>
             <span className="flex-shrink-0 px-2 py-0.5 rounded-full text-white text-[10px] font-bold" style={{ background: lobeColor(tooltip.r.lobe) }}>{tooltip.r.lobe}</span>
           </div>
           <div className="px-4 py-2.5 grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] font-mono">
-            <span className="text-paper/40">Hemisphere</span><span className="text-paper/80">{tooltip.r.hemi === "L" ? "Left" : tooltip.r.hemi === "R" ? "Right" : tooltip.r.hemi}</span>
-            <span className="text-paper/40">Importance</span><span className="font-bold text-paper">{tooltip.r.score.toFixed(2)}</span>
-            <span className="text-paper/40">Important</span><span>{tooltip.r.sig ? <span className="text-sig font-bold">Yes ✓</span> : <span className="text-paper/30">No</span>}</span>
+            <span className="text-white/45">Hemisphere</span><span className="text-white/85">{tooltip.r.hemi === "L" ? "Left" : tooltip.r.hemi === "R" ? "Right" : tooltip.r.hemi}</span>
+            <span className="text-white/45">Importance</span><span className="font-bold text-white">{tooltip.r.score.toFixed(2)}</span>
+            <span className="text-white/45">Important</span><span>{tooltip.r.sig ? <span className="text-sig font-bold">Yes ✓</span> : <span className="text-white/35">No</span>}</span>
           </div>
         </div>
       )}

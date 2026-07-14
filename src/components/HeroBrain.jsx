@@ -28,13 +28,15 @@ function Brain({ onReady }) {
 // transparent canvas so it composites straight onto the page. Non-interactive by
 // design (the real viewer lives in Explorer); pointer-events are off so it never
 // traps scroll. Lazy-loaded and gated by prefers-reduced-motion at the call site.
-export default function HeroBrain({ height = 460, onReady }) {
+export default function HeroBrain({ onReady }) {
   return (
     <Canvas
-      camera={{ position: [0, 20, 340], fov: 38 }}
+      // Sagittal profile: look along the L–R axis with the superior axis up, so
+      // autoRotate spins it as an upright anatomical turntable (not a top-down disc).
+      camera={{ position: [360, 0, 40], up: [0, 0, 1], fov: 36 }}
       gl={{ antialias: true, alpha: true }}
       dpr={[1, 2]}
-      style={{ height, background: "transparent", pointerEvents: "none" }}
+      style={{ height: "100%", background: "transparent", pointerEvents: "none" }}
     >
       <ambientLight intensity={1.6} />
       <directionalLight position={[300, 400, 200]} intensity={1.1} />

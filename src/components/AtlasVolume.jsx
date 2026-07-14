@@ -85,12 +85,12 @@ export default function AtlasVolume({ atlas, height = 520 }) {
       <div className="absolute top-2 right-2 flex gap-1 bg-black/60 backdrop-blur rounded-md p-1 border border-white/10">
         {SLICE_BUTTONS.map((b) => (
           <button key={b.label} onClick={() => setSlice(b.val)}
-            className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${slice === b.val ? "bg-accent text-ink font-semibold" : "text-paper/60 hover:text-paper"}`}>
+            className={`font-mono text-[10px] px-2 py-1 rounded transition-colors ${slice === b.val ? "bg-accent text-ink font-semibold" : "text-white/60 hover:text-white"}`}>
             {b.label}
           </button>
         ))}
       </div>
-      <div className="absolute bottom-2 left-3 font-mono text-[10px] text-paper/45 tracking-wide pointer-events-none">
+      <div className="absolute bottom-2 left-3 font-mono text-[10px] text-white/45 tracking-wide pointer-events-none">
         NiiVue label volume · drag to rotate · scroll to zoom
       </div>
     </div>

@@ -113,14 +113,14 @@ export default function NiiVueViewer({
               "font-mono text-[10px] px-2 py-1 rounded transition-colors",
               slice === b.val
                 ? "bg-accent text-ink font-semibold"
-                : "text-paper/60 hover:text-paper",
+                : "text-white/60 hover:text-white",
             ].join(" ")}
           >
             {b.label}
           </button>
         ))}
       </div>
-      <div className="absolute bottom-2 left-3 font-mono text-[10px] text-paper/45 tracking-wide pointer-events-none">
+      <div className="absolute bottom-2 left-3 font-mono text-[10px] text-white/45 tracking-wide pointer-events-none">
         drag to pan · scroll to zoom · click for crosshair
       </div>
     </div>

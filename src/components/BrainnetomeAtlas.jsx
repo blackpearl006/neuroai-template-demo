@@ -323,10 +323,10 @@ export default function BrainnetomeAtlas({ counts, sig, regions, height = 500, n
             style={{ background: (networkColors[tooltip.data.our_network7] ?? "#444") + "22" }}
           >
             <div className="flex-1 min-w-0">
-              <p className="font-mono font-bold text-paper text-sm leading-tight truncate">
+              <p className="font-mono font-bold text-white text-sm leading-tight truncate">
                 {tooltip.data.label}
               </p>
-              <p className="font-mono text-[10px] text-paper/50 mt-0.5 truncate">{tooltip.data.region}</p>
+              <p className="font-mono text-[10px] text-white/50 mt-0.5 truncate">{tooltip.data.region}</p>
             </div>
             <span
               className="flex-shrink-0 px-2 py-0.5 rounded-full text-white text-[10px] font-bold font-sans whitespace-nowrap"
@@ -338,24 +338,24 @@ export default function BrainnetomeAtlas({ counts, sig, regions, height = 500, n
 
           {/* Stats grid */}
           <div className="px-4 py-2.5 grid grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] font-mono">
-            <span className="text-paper/40">Hemisphere</span>
-            <span className="text-paper/80">{tooltip.data.hemi === "L" ? "Left" : "Right"}</span>
+            <span className="text-white/45">Hemisphere</span>
+            <span className="text-white/85">{tooltip.data.hemi === "L" ? "Left" : "Right"}</span>
 
-            <span className="text-paper/40">{numCohorts > 1 ? "Cohorts" : "Count"}</span>
-            <span className="font-bold text-paper">
+            <span className="text-white/45">{numCohorts > 1 ? "Cohorts" : "Count"}</span>
+            <span className="font-bold text-white">
               {tooltip.data.count}{numCohorts > 1 ? ` / ${numCohorts}` : ""}
             </span>
 
-            <span className="text-paper/40">Significant</span>
+            <span className="text-white/45">Significant</span>
             <span>{tooltip.data.isSig
               ? <span className="text-sig font-bold">Yes ✓</span>
-              : <span className="text-paper/30">No</span>
+              : <span className="text-white/35">No</span>
             }</span>
 
             {tooltip.data.our_network20 && tooltip.data.our_network20 !== "nan" && tooltip.data.our_network20 !== tooltip.data.our_network7 && (
               <>
-                <span className="text-paper/40">Sub-network</span>
-                <span className="text-paper/60">{tooltip.data.our_network20}</span>
+                <span className="text-white/45">Sub-network</span>
+                <span className="text-white/60">{tooltip.data.our_network20}</span>
               </>
             )}
           </div>
