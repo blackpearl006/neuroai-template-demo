@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, Suspense, lazy } from "react";
+import { useState, useEffect, useMemo, useCallback, Suspense, lazy } from "react";
 import { loadAtlasIndex, loadAtlas } from "../lib/atlas";
 import GlassBrain2D from "./GlassBrain2D";
 import RegionTable from "./RegionTable";
@@ -45,18 +45,19 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
   const [mode3d, setMode3d] = useState("mesh"); // "mesh" | "volume"
   const [showAll, setShowAll] = useState(false);
   const [seen, setSeen] = useState(false); // defer heavy 3D libs until scrolled into view
-  const boxRef = useRef(null);
 
   useEffect(() => { loadAtlasIndex().then(setIndex); }, []);
   useEffect(() => { setData(null); setMode3d("mesh"); loadAtlas(atlasKey).then(setData); }, [atlasKey]);
-  useEffect(() => {
-    if (!boxRef.current || seen) return;
+
+  // Callback ref: the loading-gate render has no ref'd node, so the observer must attach
+  // whenever the real box node shows up (not just once on mount, which can race data loading).
+  const attachBoxRef = useCallback((node) => {
+    if (!node || seen) return;
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) { setSeen(true); obs.disconnect(); } },
       { rootMargin: "300px" } // start loading just before it reaches the viewport
     );
-    obs.observe(boxRef.current);
-    return () => obs.disconnect();
+    obs.observe(node);
   }, [seen]);
 
   const meta = useMemo(() => index?.find((e) => e.key === atlasKey), [index, atlasKey]);
@@ -79,7 +80,7 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
     seen ? <Viewer3D atlas={atlas} mode={mode3d} height={h} /> : <Loading label="Loading 3D viewer…" height={h} />;
 
   return (
-    <div ref={boxRef} className="rounded-xl border border-rule/20 overflow-hidden">
+    <div ref={attachBoxRef} className="rounded-xl border border-rule/20 overflow-hidden">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-3 px-4 py-3 bg-paper border-b border-rule/20">
         <label className="flex items-center gap-2">
