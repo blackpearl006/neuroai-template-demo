@@ -33,6 +33,7 @@ with a wrong number is worse than one with a clearly-marked `TODO`.
 | `config.yml` | title, authors, theme, fonts, hero (buttons, chips, brain figure), which sections show + their order | settings (`name: value`) |
 | `hero.md`, `abstract.md`, `architecture.md`, `preprocessing.md`, `explorer.md`, `results.md`, `resources.md` | the **words** of each section (front-matter for eyebrow/title/lede + Markdown body) | Markdown |
 | `stats.csv`, `metrics.csv`, `results-table.csv`, `chart-mae.csv`, `chart-lobes.csv`, `links.csv` | the **numbers** — stat cards, results table, bar charts, resource links | CSV (open in Excel/Sheets) |
+| `brain-values.csv` *(optional)* | **BYO data** — your own per-region results, coloured onto any atlas in the Explorer, no Python (see §4) | CSV |
 | `citation.bib` | the citation | BibTeX |
 
 Figures go in `public/` and are referenced by repo-relative path (the renderer adds
@@ -69,7 +70,10 @@ The `showcase` section is a live catalogue of every component; keep it **off**
 2. **`config.yml` meta**: `title`, `description`, `url` (the Pages URL), `twitter`,
    `ogImage` (replace `public/og-image.png` with the paper's hero figure or a 1200×630 card).
 3. **`config.yml` theme / fonts / fontScale**: pick to match the paper's field.
-   `light` + `editorial` is the safe default.
+   `light` + `editorial` is the safe default (a warm, editorial research look).
+   For a clinical / radiology paper, `theme: clinical` + `fonts: clinical` ships a
+   cool slate-and-teal "scanner" preset (reticle eyebrows, scan-line dividers, IBM
+   Plex) in one switch. Readers can also flip any preset live via the Display control.
 4. **`config.yml` hero**: `chips`, `badge`, `primaryCta`/`secondaryCta`, and the
    `brain` block (`atlas` = any key under `public/assets/atlases/`, plus `label` +
    `caption`) — the instant glass-brain that anchors the page. Delete `brain:` for a
@@ -97,6 +101,15 @@ After each step run `npm run build`; fix errors before moving on.
   from your own NIfTI label maps is an advanced, Python step —
   `scripts/build-parcellation-meshes.py` (+ `scripts/build-atlases.mjs` for
   coordinate-node atlases). If you can't run those, keep the shipped atlases.
+- **BYO data — put your own results on a brain (no Python).** Drop a
+  `content/brain-values.csv` with columns `region,value[,sig]` where `region` matches
+  an atlas region `name` or `id` (see `content/brain-values.example.csv`). The
+  Explorer's **3D mesh + region table + "important" count** recolour to your values —
+  they're min-max normalised, so any scale works (saliency, t-stat, effect size,
+  weight). Rows you omit read as zero / not significant; if you skip the `sig` column
+  the top ~20% by value are flagged. *Caveat:* the **2D glass-brain is a pre-rendered
+  image** and won't reflect the CSV — regenerate it with the Python script (below) or
+  use the 3D / table views for custom data.
 - **Bar charts** in Results are driven by `content/chart-mae.csv` (grouped) and
   `content/chart-lobes.csv` (stacked) — wide CSVs: first column = category, each
   other column = a series. Edit the numbers; the SVG chart re-renders. No chart
@@ -118,6 +131,15 @@ Present this to the human and **wait for sign-off** before deploying:
 - [ ] `npm run build` passes.
 - [ ] `deploy.basePath` is `"./"` (works for both a root user-site and a project subpath).
 
+**Self-check before hand-off** (run these; resolve every hit):
+
+```bash
+npm run build                                   # must exit 0
+grep -rn "TODO(author" content/                 # every one must be resolved or flagged to the human
+grep -rniE "brain age|cortical signatures|maya chandra|becker|12,480|brainnetome-template-demo" content/
+                                                 # leftover demo copy — should return nothing once retargeted
+```
+
 ---
 
 ## 6. Deploy (GitHub Pages via Actions)
@@ -137,6 +159,7 @@ Present this to the human and **wait for sign-off** before deploying:
 | Title, authors, links, theme, fonts, sections, hero (incl. brain figure) | `content/config.yml` |
 | Any section's prose | `content/<section>.md` |
 | Stat cards / results table / chart data / links | `content/*.csv` |
+| Your own per-region results on a brain (BYO data) | `content/brain-values.csv` (see §4) |
 | Model architecture diagram | `src/components/Architecture.jsx` |
 | Colour themes / font pairings | `src/lib/themes.js`, `src/lib/fonts.js` |
 | Brain-atlas data | `public/assets/atlases/*` (shapes in `docs/SCHEMAS.md`) |

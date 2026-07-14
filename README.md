@@ -82,8 +82,13 @@ preprocessing, explorer, results, showcase, resources`. Hide one with
 CSS-variable driven, switchable live by the reader via the control bottom-right
 (hide it with `showThemeToggle: false` in `config.yml`).
 
-- **Themes:** `light` · `dark` · `gradient` — add one in `src/lib/themes.js`.
-- **Fonts:** `apple` · `editorial` · `modern` · `display` — add a pairing in `src/lib/fonts.js`.
+- **Themes:** `light` · `dark` · `gradient` · `clinical` — add one in `src/lib/themes.js`.
+- **Fonts:** `apple` · `editorial` · `modern` · `display` · `clinical` — add a pairing in `src/lib/fonts.js`.
+
+> **Clinical preset:** set `theme: clinical` + `fonts: clinical` for a cool
+> slate-and-teal "scanner" look — reticle eyebrows, scan-line dividers and IBM
+> Plex — aimed at clinical / radiology papers. The default stays the warm
+> editorial research look.
 
 ---
 
@@ -104,6 +109,13 @@ node   scripts/build-atlases.mjs                          # coordinate-node atla
 
 The template **ships pre-generated assets**, so it builds and looks great without
 running anything.
+
+**Put your own results on a brain — no Python.** Drop a `content/brain-values.csv`
+(`region,value[,sig]`, matching an atlas region name or id — see
+`content/brain-values.example.csv`) and the Explorer's 3D mesh and region table
+recolour to *your* ROI values (min-max normalised, so any scale works). Omit the
+file and the shipped demo saliency shows. (The 2D glass-brain is a pre-rendered
+image; regenerate it with the Python script for custom 2D projections.)
 
 ---
 

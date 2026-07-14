@@ -19,8 +19,10 @@ meta:
   url:         "https://blackpearl006.github.io/neuroai-template-demo/"
 
 # Look & feel
-theme:           light        # light | dark | gradient
-fonts:           editorial    # apple | editorial | modern | display
+theme:           light        # light | dark | gradient | clinical
+fonts:           editorial    # apple | editorial | modern | display | clinical
+# Tip: theme: clinical + fonts: clinical flips the whole site to a cool
+# slate/teal "scanner" look (reticle eyebrows, scan-line dividers, IBM Plex).
 fontScale:       md           # sm | md | lg | xl
 showThemeToggle: true         # let readers switch theme / font live
 
@@ -48,5 +50,5 @@ sections:
   - { id: preprocessing, nav: Preprocessing, enabled: true }
   - { id: explorer,      nav: Explorer,      enabled: true }
   - { id: results,       nav: Results,       enabled: true }
-  - { id: showcase,      nav: Components,    enabled: false }
+  - { id: showcase,      nav: Components,    enabled: true }
   - { id: resources,     nav: Resources,     enabled: true }

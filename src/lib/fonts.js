@@ -45,4 +45,14 @@ export const FONT_THEMES = {
     mono:  `"Spline Sans Mono", monospace`,
     google: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Spline+Sans+Mono:wght@400;600&display=swap",
   },
+
+  // Clinical — IBM Plex trio. Documentation-grade; reads like clinical /
+  // scanner software rather than a poster. Pairs with theme: clinical.
+  clinical: {
+    label: "Clinical",
+    sans:  `"IBM Plex Sans", sans-serif`,
+    serif: `"IBM Plex Serif", serif`,
+    mono:  `"IBM Plex Mono", monospace`,
+    google: "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap",
+  },
 };

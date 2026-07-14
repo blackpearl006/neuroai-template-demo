@@ -18,25 +18,24 @@ const DEFAULT_STAGES = [
 ];
 
 function Arrow() {
-  return <span className="text-ink2/40 font-mono text-lg shrink-0 select-none px-0.5">→</span>;
+  return <span className="text-ink2/40 font-mono text-xl shrink-0 select-none px-1">→</span>;
 }
 
-// A conv block: Conv 3³ → BN → ReLU → MaxPool. Box height encodes the shrinking
-// feature map; fill opacity encodes the growing channel count.
-function ConvBlock({ ch, fmap, i, maxCh }) {
-  const h = 96 - i * 9;                 // feature map shrinks with depth
-  const fill = 0.12 + 0.6 * (ch / maxCh); // channels deepen the fill
+// A conv block: Conv 3³ → BN → ReLU → MaxPool. Uniform-size solid block (Clarity
+// tradition) — the growing channel count is the centred label and deepens the
+// fill; the shrinking feature-map size is read from the dimension beneath it.
+function ConvBlock({ ch, fmap, maxCh }) {
+  const fill = 0.14 + 0.66 * (ch / maxCh); // channels deepen the fill
   return (
-    <div className="flex flex-col items-center gap-1.5 shrink-0">
+    <div className="flex flex-col items-center gap-2 shrink-0">
       <div
-        className="w-14 rounded-md border border-sig/40 flex items-end justify-center"
-        style={{ height: h, background: `rgb(var(--c-sig) / ${fill})` }}
+        className="w-16 h-20 rounded-lg border border-sig/50 flex items-center justify-center"
+        style={{ background: `rgb(var(--c-sig) / ${fill})` }}
         title={`Conv 3³ · BN · ReLU · MaxPool 2³ — ${ch} channels`}
       >
-        <span className="font-mono text-[10px] text-ink/80 font-bold pb-1">{ch}</span>
+        <span className="font-sans text-base text-ink font-bold tabular-nums">{ch}</span>
       </div>
-      <span className="font-mono text-[9px] text-ink2 tabular-nums">{fmap}</span>
-      <span className="font-mono text-[8px] text-ink2/60 uppercase tracking-wide">block {i + 1}</span>
+      <span className="font-mono text-xs text-ink2 tabular-nums">{fmap}</span>
     </div>
   );
 }
@@ -51,40 +50,40 @@ export default function Architecture({
   return (
     <figure className="my-2">
       <div className="rounded-2xl border border-rule/20 bg-paper2 px-5 py-6 overflow-x-auto">
-        <div className="flex items-center gap-2 min-w-max">
-          {/* Input */}
-          <div className="flex flex-col items-center gap-1.5 shrink-0">
-            <div className="w-16 h-24 rounded-md border-2 border-ink/30 bg-ink/5 flex items-center justify-center">
-              <span className="font-mono text-[10px] text-ink2 -rotate-90 whitespace-nowrap">input</span>
+        <div className="flex items-center gap-3 min-w-max">
+          {/* Input — dashed I/O node */}
+          <div className="flex flex-col items-center gap-2 shrink-0">
+            <div className="w-16 h-20 rounded-lg border-2 border-dashed border-ink/35 bg-ink/[0.03] flex items-center justify-center">
+              <span className="font-mono text-xs text-ink2 -rotate-90 whitespace-nowrap tracking-wide">input</span>
             </div>
-            <span className="font-mono text-[9px] text-ink2 text-center max-w-[64px] leading-tight">{input}</span>
+            <span className="font-mono text-xs text-ink2 text-center max-w-[72px] leading-tight">{input}</span>
           </div>
           <Arrow />
 
           {/* Conv blocks ×N */}
           {stages.map((s, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <ConvBlock {...s} i={i} maxCh={maxCh} />
+            <div key={i} className="flex items-center gap-3">
+              <ConvBlock {...s} maxCh={maxCh} />
               {i < stages.length - 1 && <Arrow />}
             </div>
           ))}
           <Arrow />
 
           {/* Global average pool */}
-          <div className="flex flex-col items-center gap-1.5 shrink-0">
-            <div className="w-12 h-12 rounded-full border border-ink/30 bg-paper flex items-center justify-center">
-              <span className="font-mono text-[9px] text-ink2 text-center leading-tight">avg<br/>pool</span>
+          <div className="flex flex-col items-center gap-2 shrink-0">
+            <div className="w-14 h-14 rounded-full border border-ink/30 bg-paper flex items-center justify-center">
+              <span className="font-mono text-[11px] text-ink2 text-center leading-tight">avg<br/>pool</span>
             </div>
-            <span className="font-mono text-[8px] text-ink2/60 uppercase tracking-wide">global</span>
+            <span className="font-mono text-xs text-ink2/70 uppercase tracking-wide">global</span>
           </div>
           <Arrow />
 
-          {/* FC head — warm accent */}
-          <div className="flex flex-col items-center gap-1.5 shrink-0">
-            <div className="px-4 py-3 rounded-md bg-accent/15 border border-accent/50 flex items-center justify-center">
-              <span className="font-mono text-[11px] font-bold text-ink whitespace-nowrap">FC → ŷ</span>
+          {/* FC head — solid accent (a real layer, not an I/O node) */}
+          <div className="flex flex-col items-center gap-2 shrink-0">
+            <div className="px-4 py-4 rounded-lg bg-accent/15 border border-accent/60 flex items-center justify-center">
+              <span className="font-sans text-sm font-bold text-ink whitespace-nowrap">FC → ŷ</span>
             </div>
-            <span className="font-mono text-[9px] text-ink2 text-center max-w-[80px] leading-tight">{output}</span>
+            <span className="font-mono text-xs text-ink2 text-center max-w-[88px] leading-tight">{output}</span>
           </div>
         </div>
       </div>

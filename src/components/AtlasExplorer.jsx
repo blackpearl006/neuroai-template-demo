@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, Suspense, lazy } from "react";
-import { loadAtlasIndex, loadAtlas } from "../lib/atlas";
+import { loadAtlasIndex, loadAtlas, applyValues } from "../lib/atlas";
 import GlassBrain2D from "./GlassBrain2D";
 import RegionTable from "./RegionTable";
 
@@ -37,7 +37,7 @@ const Viewer3D = ({ atlas, mode, height }) => (
 // atlases (Brainnetome, Schaefer, AAL, Harvard-Oxford, Yeo, Glasser) render as a
 // surface mesh (default) or a NiiVue label volume (toggle to compare); the rest
 // render as coordinate nodes. ~20% of regions are flagged important (placeholder).
-export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultView = "split" }) {
+export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultView = "split", values = null }) {
   const [index, setIndex] = useState(null);
   const [atlasKey, setAtlasKey] = useState(defaultAtlas);
   const [data, setData] = useState(null);
@@ -47,7 +47,12 @@ export default function AtlasExplorer({ defaultAtlas = "brainnetome", defaultVie
   const [seen, setSeen] = useState(false); // defer heavy 3D libs until scrolled into view
 
   useEffect(() => { loadAtlasIndex().then(setIndex); }, []);
-  useEffect(() => { setData(null); setMode3d("mesh"); loadAtlas(atlasKey).then(setData); }, [atlasKey]);
+  useEffect(() => {
+    setData(null); setMode3d("mesh");
+    // Merge author values (content/brain-values.csv) over the baked score/sig
+    // without mutating the shared atlas cache (applyValues returns fresh arrays).
+    loadAtlas(atlasKey).then((d) => setData(values ? { ...d, regions: applyValues(d.regions, values) } : d));
+  }, [atlasKey, values]);
 
   // Callback ref: the loading-gate render has no ref'd node, so the observer must attach
   // whenever the real box node shows up (not just once on mount, which can race data loading).

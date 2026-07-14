@@ -52,6 +52,24 @@ export const THEMES = {
     pageBg: "linear-gradient(135deg, hsl(280 70% 95%) 0%, hsl(330 80% 95%) 45%, hsl(30 85% 94%) 100%)",
     dataviz: { shell: "#9A8FB5", seq: ["#FFFFFF", "#A855F7", "#DB2777"] },
   },
+
+  // Clinical · Scanner — cool slate + desaturated teal, the vernacular of
+  // DICOM viewers and scanner consoles. Pair with fonts: clinical (IBM Plex)
+  // and it triggers the reticle / scan-line motif (see index.css). Opt-in via
+  // config.yml — the research look (light) stays the default.
+  clinical: {
+    label: "Clinical · Scanner",
+    colors: {
+      paper:  "241 244 247", // cool slate-white
+      paper2: "228 233 238", // card surface
+      ink:    "16 24 33",    // near-black slate
+      ink2:   "71 87 102",   // cool gray-blue secondary text
+      rule:   "35 48 63",    // dividers
+      accent: "13 116 138",  // desaturated blue-teal
+      sig:    "196 44 54",   // clinical alert-red — significance/emphasis
+    },
+    dataviz: { shell: "#8898AA", seq: ["#E4E9EE", "#0D748A", "#C42C36"] },
+  },
 };
 
 // Categorical colours for brain networks — independent of light/dark theme.

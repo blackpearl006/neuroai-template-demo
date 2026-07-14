@@ -79,7 +79,7 @@ const config = {
     abstract:      { ...(md.abstract || {}), stats: csv.stats || [] },
     architecture:  { ...(md.architecture || {}) },
     preprocessing: { ...(md.preprocessing || {}) },
-    explorer:      { ...(md.explorer || {}) },
+    explorer:      { ...(md.explorer || {}), values: csv["brain-values"] || null },
     results:       { ...(md.results || {}), metrics: csv.metrics || [], table: { columns: resultsCols, rows: resultsRows },
                      charts: { mae: csv["chart-mae"] || [], lobes: csv["chart-lobes"] || [] } },
     resources:     { ...(md.resources || {}), links: csv.links || [], citation: (citationRaw || "").trim() },

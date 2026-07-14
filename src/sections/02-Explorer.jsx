@@ -14,7 +14,7 @@ export default function Explorer() {
       title={c.title || "Important brain regions"}
       lede={c.lede || "Which regions drive the model's prediction? Choose a brain atlas and a view to explore the most important regions in 3D, in 2D projections, or as a sortable table."}
     >
-      <AtlasExplorer defaultAtlas={c.defaultAtlas || "brainnetome"} defaultView={c.defaultView || "split"} />
+      <AtlasExplorer defaultAtlas={c.defaultAtlas || "brainnetome"} defaultView={c.defaultView || "split"} values={c.values} />
     </Section>
   );
 }

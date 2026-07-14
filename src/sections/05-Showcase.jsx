@@ -8,12 +8,25 @@ import BrainRenderer from "../components/BrainRenderer";
 import Carousel from "../components/Carousel";
 import Gallery from "../components/Gallery";
 import Callout from "../components/Callout";
+import config from "../config";
 
 const B = import.meta.env.BASE_URL;
 const A = (p) => `${B}${p}`;
 
-// Demo imagery (Unsplash, search "brain" — see public/demo/CREDITS.md).
-const BRAIN = Array.from({ length: 8 }, (_, i) => A(`demo/brain-0${i + 1}.jpg`));
+// Real imagery: the atlas glass-brain projections this template already ships
+// (public/assets/atlases/<key>_glass.png). No stock photos — the showcase runs
+// on the paper's own assets so nothing reads as placeholder.
+const ATLASES = [
+  { key: "brainnetome",    label: "Brainnetome · 246 regions" },
+  { key: "schaefer400",    label: "Schaefer · 400 parcels" },
+  { key: "glasser360",     label: "Glasser HCP-MMP · 360" },
+  { key: "aal116",         label: "AAL · 116 regions" },
+  { key: "harvard_oxford", label: "Harvard–Oxford" },
+  { key: "yeo7",           label: "Yeo · 7 networks" },
+  { key: "gordon333",      label: "Gordon · 333 nodes" },
+  { key: "power264",       label: "Power · 264 nodes" },
+];
+const glass = (k) => A(`assets/atlases/${k}_glass.png`);
 
 const CODE = `import torch
 from model import BrainAgeNet
@@ -23,17 +36,9 @@ with torch.no_grad():
     pred_age = model(volume)        # (B, 1)
 mae = (pred_age - true_age).abs().mean()`;
 
-const TABLE_COLS = [
-  { key: "cohort", label: "Cohort" },
-  { key: "n", label: "N", align: "right" },
-  { key: "mae", label: "MAE (yr)", align: "right" },
-  { key: "r", label: "r", align: "right" },
-];
-const TABLE_ROWS = [
-  { cohort: "Dataset A", n: "1,024", mae: "3.21", r: "0.94" },
-  { cohort: "Dataset B", n: "642", mae: "3.88", r: "0.91" },
-  { cohort: "Dataset C", n: "918", mae: "4.10", r: "0.89" },
-];
+// Real per-cohort results — the same table content/results-table.csv drives the
+// Results section, rendered here to show the DataTable primitive on live data.
+const RESULTS = config.content.results.table;
 
 const SLICES = ["axial_1", "axial_3", "axial_5", "coronal_1", "coronal_2", "sagittal_1", "sagittal_2", "axial_6"];
 
@@ -49,7 +54,7 @@ export default function Showcase() {
     >
       <Block title="Carousel / slideshow (auto-advancing · hover to pause)">
         <Carousel
-          items={BRAIN.slice(0, 5).map((src, i) => ({ src, caption: `Slide ${i + 1} — swap for your own figures.` }))}
+          items={ATLASES.slice(0, 5).map(({ key, label }) => ({ src: glass(key), caption: label }))}
           height={420}
         />
       </Block>
@@ -57,15 +62,15 @@ export default function Showcase() {
       <Block title="Image gallery (responsive grid · click to enlarge)">
         <Gallery
           cols={4}
-          items={BRAIN.map((src, i) => ({ src, caption: `Figure ${i + 1}` }))}
-          caption="A responsive image grid with a built-in lightbox — like Clarity's columns-2 / columns-6."
+          items={ATLASES.map(({ key, label }) => ({ src: glass(key), caption: label }))}
+          caption="A responsive image grid with a built-in lightbox — here, eight of the atlas projections the template ships with."
         />
       </Block>
 
       <Block title="Callouts (note · tip · warning)">
-        <Callout kind="note" title="Note">Use callouts to flag context, assumptions or caveats inline with your prose.</Callout>
+        <Callout kind="note" title="Finding">Prediction is carried by association cortex, medial temporal lobe and key subcortical structures — and the same regions surface across the Schaefer, AAL and Glasser parcellations.</Callout>
         <Callout kind="tip" title="Tip">Everything on this page is driven by the Markdown &amp; CSV files in the <code>content/</code> folder — no code.</Callout>
-        <Callout kind="warning" title="Heads up">Replace the placeholder Unsplash imagery with your own figures before publishing.</Callout>
+        <Callout kind="warning" title="Before you publish">This showcase ships enabled so you can browse every primitive. Set <code>showcase → enabled: false</code> in <code>config.yml</code> for a published paper.</Callout>
       </Block>
 
       <Block title="Math (LaTeX via KaTeX)">
@@ -80,7 +85,7 @@ export default function Showcase() {
       </Block>
 
       <Block title="Table (responsive)">
-        <DataTable columns={TABLE_COLS} rows={TABLE_ROWS} caption="Per-dataset performance (illustrative)." />
+        <DataTable columns={RESULTS.columns} rows={RESULTS.rows} caption="Per-cohort brain-age error — the live results table from content/results-table.csv." />
       </Block>
 
       <Block title="Comparison slider (Healthy / Unhealthy · before / after)">

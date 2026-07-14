@@ -48,7 +48,10 @@ function collectCentroids(scene) {
 }
 
 // ── Parcellated mesh scene (Brainnetome) ──────────────────────────────────────
-function MeshScene({ regions, colorMode, shellOpacity, onHover, meshUrl }) {
+// Exported so the hero can reuse the exact same mesh + colouring (see HeroBrain).
+// `onReady` fires once the mesh group is populated — the hero uses it to cross-
+// fade its static poster out to the live brain.
+export function MeshScene({ regions, colorMode, shellOpacity, onHover, meshUrl, onReady }) {
   const { scene } = useGLTF(meshUrl);
   const groupRef = useRef(null);
   const matsRef = useRef({});
@@ -70,6 +73,7 @@ function MeshScene({ regions, colorMode, shellOpacity, onHover, meshUrl }) {
       };
     });
     groupRef.current.add(clone);
+    onReady?.();
   }, [scene]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

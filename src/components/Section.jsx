@@ -4,7 +4,7 @@ export default function Section({ eyebrow, title, lede, children, id }) {
       <div className="grid md:grid-cols-12 gap-6 mb-10">
         <div className="md:col-span-4">
           {eyebrow && (
-            <p className="font-sans text-xs font-semibold tracking-widest uppercase text-ink2 mb-2">
+            <p className="section-eyebrow font-sans text-xs font-semibold tracking-widest uppercase text-ink2 mb-2">
               {eyebrow}
             </p>
           )}
@@ -16,6 +16,8 @@ export default function Section({ eyebrow, title, lede, children, id }) {
           </p>
         )}
       </div>
+      {/* Scanner scan-line divider — inert unless the clinical preset is active. */}
+      <div className="section-rule" aria-hidden="true" />
       {children}
     </section>
   );

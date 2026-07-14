@@ -1,4 +1,17 @@
 import config from "../config";
+import { lazy, Suspense, Component, useState, useEffect } from "react";
+
+const HeroBrain = lazy(() => import("../components/HeroBrain"));
+
+// Quiet boundary: if WebGL is unavailable the live brain simply never appears
+// (the reduced-motion path / static poster covers that case) — it must never
+// escalate a missing GPU into the app-wide error screen.
+class BrainBoundary extends Component {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onFail?.(); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
 
 // Prefix a project-relative asset path with the deploy base; pass http(s) through.
 const asset = (p) => (!p || /^https?:/.test(p) ? p : `${import.meta.env.BASE_URL}${p}`);
@@ -19,6 +32,17 @@ function renderTitle(title, accent) {
 export default function Hero() {
   const { identity } = config;
   const hero = config.content.hero;
+  const [brainReady, setBrainReady] = useState(false);
+  const [brainFailed, setBrainFailed] = useState(false);
+  const [motionOK, setMotionOK] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setMotionOK(!mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   return (
     <header className="max-w-wide mx-auto px-6 pt-20 pb-14">
@@ -77,37 +101,47 @@ export default function Hero() {
         </div>
       )}
 
-      {/* Hero brain — leads with the instant, static glass-brain so the first
-          thing a visitor sees is the science, never a loading spinner. The full
-          interactive viewer (3D mesh / volume / table) lives in the Explorer
-          section; this anchors the hero and points there. */}
-      {hero.brain?.atlas && (
+      {/* Hero brain. Motion users get a borderless, slowly auto-rotating 3D mesh
+          on a transparent canvas — it composites straight onto the page, not a
+          framed screenshot. Reduced-motion / no-WebGL users get the instant
+          static glass-brain in a minimal figure (a black projection reads best
+          contained). Either way the interactive viewer lives in Explorer. */}
+      {hero.brain?.atlas && (motionOK && !brainFailed ? (
+        <div className="relative mt-12 hero-brain-mask" style={{ height: 460 }}>
+          <BrainBoundary onFail={() => setBrainFailed(true)}>
+            <Suspense fallback={null}>
+              <div
+                className="absolute inset-0 transition-opacity duration-[900ms] ease-out"
+                style={{ opacity: brainReady ? 1 : 0 }}
+              >
+                <HeroBrain height={460} onReady={() => setBrainReady(true)} />
+              </div>
+            </Suspense>
+          </BrainBoundary>
+          <a
+            href="#explorer"
+            className="absolute bottom-0 right-1 font-mono text-[10px] uppercase tracking-widest text-ink2/70 hover:text-sig transition-colors"
+          >
+            Explore in 3D ↓
+          </a>
+        </div>
+      ) : (
         <figure className="mt-12 rounded-2xl border border-rule/20 overflow-hidden bg-paper2">
-          <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-rule/20 bg-paper">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-ink2">
-              {hero.brain.label || "Glass brain"}
-            </span>
-            <a
-              href="#explorer"
-              className="font-mono text-[10px] uppercase tracking-widest text-ink2 hover:text-sig transition-colors"
-            >
-              Explore in 3D ↓
-            </a>
-          </div>
-          <div style={{ background: "#000" }}>
+          <div style={{ background: "#000" }} className="relative">
             <img
               src={asset(`assets/atlases/${hero.brain.atlas}_glass.png`)}
               alt={`${hero.brain.label || "Brain atlas"} glass-brain projection`}
               className="block w-full h-auto"
             />
+            <a
+              href="#explorer"
+              className="absolute bottom-2 right-3 font-mono text-[10px] uppercase tracking-widest text-white/60 hover:text-white transition-colors"
+            >
+              Explore in 3D ↓
+            </a>
           </div>
-          {hero.brain.caption && (
-            <figcaption className="px-4 py-3 border-t border-rule/20 font-serif text-sm text-ink2 italic">
-              {hero.brain.caption}
-            </figcaption>
-          )}
         </figure>
-      )}
+      ))}
 
       {/* Optional project cover image. Omit `hero.cover` in content/config.yml for
           Clarity's "no-cover" title layout (the default). */}

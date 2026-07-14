@@ -40,6 +40,42 @@
     writing-mode: vertical-rl;
     text-orientation: mixed;
   }
+  /* Hero brain: dissolve the transparent canvas edges into the page so the
+     rotating mesh reads as part of the page, not a rectangle. */
+  .hero-brain-mask {
+    -webkit-mask-image: radial-gradient(ellipse 72% 78% at 50% 46%, #000 52%, transparent 100%);
+    mask-image: radial-gradient(ellipse 72% 78% at 50% 46%, #000 52%, transparent 100%);
+  }
+}
+
+/* ── Clinical preset · scanner motif ──────────────────────────────────────
+   Reticle-prefixed eyebrows + a tick-mark scan-line divider — the vernacular
+   of DICOM viewers / scanner consoles. Gated on data-theme so switching the
+   preset live (or via config.yml) swaps the whole identity, not just colours.
+   Inert (display:none / no ::before) under every other theme. */
+.section-rule { display: none; }
+
+:root[data-theme="clinical"] .section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+:root[data-theme="clinical"] .section-eyebrow::before {
+  content: "+";                     /* crosshair reticle marking the section */
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.35em;
+  line-height: 0;
+  color: rgb(var(--c-accent));
+}
+:root[data-theme="clinical"] .section-rule {
+  display: block;
+  height: 8px;
+  margin-top: -1.5rem;              /* pull up into the header's mb-10 gap */
+  margin-bottom: 2.5rem;
+  background:
+    repeating-linear-gradient(90deg, rgb(var(--c-rule) / 0.30) 0 1px, transparent 1px 14px) top left / 100% 8px no-repeat,
+    linear-gradient(rgb(var(--c-rule) / 0.20), rgb(var(--c-rule) / 0.20)) bottom left / 100% 1px no-repeat;
 }
 
 @keyframes fade-up {

@@ -11,6 +11,38 @@ function load(url) {
 export const loadAtlasIndex = () => load(`${base}assets/atlases/index.json`);
 export const loadAtlas = (key) => load(`${base}assets/atlases/${key}.json`);
 
+// BYO data: merge author-supplied per-region values (content/brain-values.csv)
+// over the baked score/sig, so a non-coder can put their own ROI results on any
+// shipped atlas — no Python. Rows: { region:<name|id>, value:<number>, sig?:0|1 }.
+// Values are min-max normalised to [0,1] so any scale (saliency, t-stat, effect
+// size, weight) colours correctly. Regions absent from the CSV read as 0 / not
+// significant. If no `sig` column is given, the top ~20% by value are flagged.
+export function applyValues(regions, values) {
+  if (!values || !values.length) return regions;
+  const byKey = new Map();
+  for (const row of values) {
+    const k = String(row.region ?? row.name ?? row.id ?? "").trim().toLowerCase();
+    if (k) byKey.set(k, row);
+  }
+  const lookup = (r) =>
+    byKey.get(String(r.name).toLowerCase()) || byKey.get(String(r.id).toLowerCase());
+  const nums = values.map((v) => Number(v.value)).filter((n) => Number.isFinite(n));
+  if (!nums.length) return regions;
+  const lo = Math.min(...nums), hi = Math.max(...nums), span = hi - lo || 1;
+  const hasSig = values.some((v) => v.sig !== undefined && v.sig !== "");
+  const sorted = [...nums].sort((a, b) => a - b);
+  const thr = sorted[Math.floor(sorted.length * 0.8)] ?? hi;
+  const truthy = (v) => v === 1 || v === "1" || String(v).toLowerCase() === "true";
+  return regions.map((r) => {
+    const row = lookup(r);
+    if (!row) return { ...r, score: 0, sig: 0 };
+    const raw = Number(row.value);
+    const score = Number.isFinite(raw) ? (raw - lo) / span : 0;
+    const sig = hasSig ? (truthy(row.sig) ? 1 : 0) : (raw >= thr ? 1 : 0);
+    return { ...r, score, sig };
+  });
+}
+
 // Least-squares fit of a single line: y = slope*x + intercept.
 function fitLine(xs, ys) {
   const n = xs.length;
