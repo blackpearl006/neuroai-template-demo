@@ -12,7 +12,7 @@ style) by editing **Markdown, CSV and one settings file** — no coding.
 Stack: **Vite + React + Tailwind + Three.js + NiiVue**. Deploys free on **GitHub Pages**.
 Full walkthrough in [`HOWTO.md`](HOWTO.md).
 
-> **It ships as a finished demo paper** — *"Cortical Signatures of Brain Age"* —
+> **It ships as a finished demo paper** — *"Anatomical Predictors of Fluid Reasoning"* —
 > so the first thing you see is a complete, polished page rather than empty
 > scaffolding. Replace the demo text/numbers in `content/` with your own. The
 > component **showcase** (every building block in one place) ships **off**; flip

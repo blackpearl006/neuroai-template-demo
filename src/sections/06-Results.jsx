@@ -40,7 +40,7 @@ export default function Results() {
               categoryKey="Cohort"
               unit=" yr"
               colors={["#C8312B", "#94A0B4"]}
-              caption="Mean absolute error per cohort — model vs. a mean-age baseline (placeholder data)."
+              caption="Mean absolute error per cohort — model vs. a group-mean baseline (placeholder data)."
             />
           )}
           {charts.lobes?.length > 0 && (

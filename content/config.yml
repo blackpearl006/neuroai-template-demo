@@ -3,17 +3,17 @@
 # Full walkthrough in HOWTO.md.
 
 # Who / what
-title:       "Cortical Signatures of Brain Age"
-titleAccent: "Brain Age"          # this word in the title shows in the accent colour
-authors:     "Maya Chandra, Tom Becker, Priya Nair, Daniel West"
-institution: "Centre for Computational Neuroimaging"
+title:       "Anatomical Predictors of Fluid Reasoning"
+titleAccent: "Fluid Reasoning"    # this word in the title shows in the accent colour
+authors:     "John Doe, John Doe, John Doe, John Doe"
+institution: "Your Institution"
 year:        2026
 repoUrl:     "https://github.com/blackpearl006/neuroai-template-demo"
 
 # Browser tab + link previews
 meta:
-  title:       "Cortical Signatures of Brain Age"
-  description: "A compact 3D-CNN predicts brain age from T1 MRI across 8 cohorts, with atlas-based saliency mapping the regions that drive each prediction."
+  title:       "Anatomical Predictors of Fluid Reasoning"
+  description: "A compact 3D residual CNN predicts fluid reasoning scores from T1 MRI across 8 cohorts, with atlas-based saliency mapping the regions that drive each prediction."
   ogImage:     "og-image.png"    # a file in the /public folder
   twitter:     "@your_handle"
   url:         "https://blackpearl006.github.io/neuroai-template-demo/"
@@ -28,8 +28,8 @@ showThemeToggle: true         # let readers switch theme / font live
 
 # Hero (top of the page). Add  cover: "demo/brain-06.jpg"  for a banner image.
 hero:
-  badge: "8 cohorts · 12,480 scans"
-  chips: ["ADNI", "OASIS-3", "Cam-CAN", "IXI", "SALD", "SRPBS", "BrainLat", "Mayo"]
+  badge: "8 cohorts · 9,340 scans"
+  chips: ["HCP-YA", "HCP-D", "ABCD", "AOMIC-ID1000", "AOMIC-PIOP1", "NKI-RS", "PNC", "eNKI"]
   primaryCta:   { label: "Explore brain regions →", href: "#explorer" }
   secondaryCta: { label: "Paper & code",            href: "#resources" }
   # Hero brain figure — an instant glass-brain projection that anchors the page.

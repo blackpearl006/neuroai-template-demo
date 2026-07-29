@@ -1,5 +1,5 @@
 stat,label,detail
-8,cohorts,"ADNI, OASIS-3, Cam-CAN, IXI… 4 continents"
-"12,480",T1 MRI scans,healthy controls
-6–94,age range (yr),full lifespan coverage
+8,cohorts,"HCP-YA, ABCD, NKI-RS, PNC… 4 continents"
+"9,340",T1 MRI scans,healthy participants
+8–85,age range (yr),full lifespan coverage
 246,brain regions,Brainnetome parcellation

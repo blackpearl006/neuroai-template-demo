@@ -16,7 +16,7 @@ export default function ArchitectureSection() {
       id="architecture"
       eyebrow={c.eyebrow || "Model"}
       title={c.title || "Architecture"}
-      lede={c.lede || "A compact 3D convolutional network maps a whole-brain T1 MRI to a single predicted age."}
+      lede={c.lede || "A compact 3D convolutional network maps a whole-brain T1 MRI to a single predicted score."}
     >
       <figure>
         <img

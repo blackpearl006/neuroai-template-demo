@@ -136,7 +136,7 @@ Present this to the human and **wait for sign-off** before deploying:
 ```bash
 npm run build                                   # must exit 0
 grep -rn "TODO(author" content/                 # every one must be resolved or flagged to the human
-grep -rniE "brain age|cortical signatures|maya chandra|becker|12,480|brainnetome-template-demo" content/
+grep -rniE "fluid reasoning|anatomical predictors|morphonet|john doe|your institution|9,340|neuroai-template-demo" content/
                                                  # leftover demo copy — should return nothing once retargeted
 ```
 

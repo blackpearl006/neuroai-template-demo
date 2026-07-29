@@ -29,12 +29,12 @@ const ATLASES = [
 const glass = (k) => A(`assets/atlases/${k}_glass.png`);
 
 const CODE = `import torch
-from model import BrainAgeNet
+from model import MorphoNet
 
-model = BrainAgeNet.load("weights.pt").eval()
+model = MorphoNet.load("weights.pt").eval()
 with torch.no_grad():
-    pred_age = model(volume)        # (B, 1)
-mae = (pred_age - true_age).abs().mean()`;
+    pred_score = model(volume)      # (B, 1)
+mae = (pred_score - true_score).abs().mean()`;
 
 // Real per-cohort results — the same table content/results-table.csv drives the
 // Results section, rendered here to show the DataTable primitive on live data.
@@ -68,7 +68,7 @@ export default function Showcase() {
       </Block>
 
       <Block title="Callouts (note · tip · warning)">
-        <Callout kind="note" title="Finding">Prediction is carried by association cortex, medial temporal lobe and key subcortical structures — and the same regions surface across the Schaefer, AAL and Glasser parcellations.</Callout>
+        <Callout kind="note" title="Finding">Prediction is carried by association cortex, lateral prefrontal cortex and key subcortical structures — and the same regions surface across the Schaefer, AAL and Glasser parcellations.</Callout>
         <Callout kind="tip" title="Tip">Everything on this page is driven by the Markdown &amp; CSV files in the <code>content/</code> folder — no code.</Callout>
         <Callout kind="warning" title="Before you publish">This showcase ships enabled so you can browse every primitive. Set <code>showcase → enabled: false</code> in <code>config.yml</code> for a published paper.</Callout>
       </Block>
@@ -85,7 +85,7 @@ export default function Showcase() {
       </Block>
 
       <Block title="Table (responsive)">
-        <DataTable columns={RESULTS.columns} rows={RESULTS.rows} caption="Per-cohort brain-age error — the live results table from content/results-table.csv." />
+        <DataTable columns={RESULTS.columns} rows={RESULTS.rows} caption="Per-cohort prediction error — the live results table from content/results-table.csv." />
       </Block>
 
       <Block title="Comparison slider (Healthy / Unhealthy · before / after)">

@@ -19,7 +19,7 @@ export const FONT_THEMES = {
     google: null,
   },
 
-  // Editorial — the original brainage look. Warm, magazine-like.
+  // Editorial — the template's original look. Warm, magazine-like.
   editorial: {
     label: "Editorial",
     sans:  `"Sora", sans-serif`,

@@ -4,8 +4,8 @@ A step-by-step for reusing this template for a new paper/study (e.g. for a
 friend). **No coding required** — you edit Markdown, CSV and one settings file,
 all inside the `content/` folder.
 
-> The template opens as a **complete demo paper** — *"Cortical Signatures of
-> Brain Age."* That's so you can see a finished page; everything in it is just
+> The template opens as a **complete demo paper** — *"Anatomical Predictors of
+> Fluid Reasoning."* That's so you can see a finished page; everything in it is just
 > placeholder content for you to overwrite. Making it yours = replacing that
 > demo text and those numbers, file by file, below.
 >
